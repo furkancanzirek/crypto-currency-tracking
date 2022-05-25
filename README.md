@@ -100,7 +100,7 @@ _You can follow the steps below._
 ## Roadmap
 
 - [x] Add README.md
-- [ ] Create folder structure
+- [x] Create folder structure
 - [ ] Release the first version
 - [ ] Multi-language Support
     - [ ] English
