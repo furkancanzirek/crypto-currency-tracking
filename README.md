@@ -106,10 +106,10 @@ _You can follow the steps below._
     - [ ] English
 - [ ] Release the second version
     - [ ] Crypto Currency News
-    - [ ] Enable Notification System
     - [ ] Enable Comment System
 - [ ] Release the third version
     - [ ] PWA Support
+     - [ ] Enable Notification System
     
     
 See the [open issues](https://github.com/furkancanzirek/crypto-currency-tracking) for a full list of proposed features (and known issues).
