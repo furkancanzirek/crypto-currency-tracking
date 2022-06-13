@@ -1,18 +1,30 @@
 {
   "name": "currency-test",
-  "private": true,
   "version": "0.0.0",
+  "private": true,
   "scripts": {
-    "dev": "vite",
+    "serve": "vite preview",
     "build": "vite build",
+    "dev": "vite",
     "preview": "vite preview"
   },
   "dependencies": {
+    "@heroicons/vue": "^1.0.6",
+    "@mdi/font": "5.9.55",
+    "@vueuse/core": "^8.6.0",
+    "roboto-fontface": "*",
     "vue": "^3.2.25",
-    "vue-router": "^4.0.15"
+    "vue-router": "^4.0.15",
+    "webfontloader": "^1.0.0"
   },
   "devDependencies": {
     "@vitejs/plugin-vue": "^2.3.3",
-    "vite": "^2.9.9"
+    "autoprefixer": "^10.4.7",
+    "postcss": "^8.4.14",
+    "sass": "^1.52.3",
+    "tailwindcss": "^3.1.2",
+    "vite": "^2.9.9",
+    "vite-plugin-vuetify": "^1.0.0-alpha.0",
+    "vue-cli-plugin-vuetify": "~2.5.1"
   }
 }
