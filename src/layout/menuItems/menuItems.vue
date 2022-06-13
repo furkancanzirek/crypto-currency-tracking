@@ -1,20 +1,39 @@
-<script setup>
-import menuItemList from "./menuItemList";
-import { ref } from "vue";
-const stateOfMenu = ref(true);
 
-const handleMenu = () => {
-  stateOfMenu.value = !stateOfMenu.value;
-};
-</script>
 
 <template>
-  <div class="sidebar relative">
-    <div @click="handleMenu" class="closeIcon absolute right-0">
-      <i class="ri-arrow-left-circle-fill text-2xl"></i>
-    </div>
+  <div
+    @click="handleMenu"
+    v-if="!stateOfMenu"
+    class="
+      inline
+      sm:hidden
+      absolute
+      bg-pink
+      border border-gray-300
+      hover:bg-[#E36D85]
+      hover:text-white
+      hover:border-white
+      hover:cursor-pointer
+      rounded-xl
+      transition
+      ease-in-out
+      duration-300
+      translate-x-[10.5rem]
+    "
+    :class="{ closeIcon: stateOfMenu }"
+  >
+    <i class="ri-arrow-left-s-fill text-3xl p-1"></i>
+  </div>
+  <div
+    class="sidebar relative transition ease-in-out duration-150"
+    :class="{
+      close: stateOfMenu,
+      open: !stateOfMenu,
+    }"
+    @mouseenter="handleMenu"
+    @mouseleave="handleMenu"
+  >
     <div
-      v-bind:style="[ stateOfMenu?{'opacity':0}:'']"
       class="
         menuItem
         flex
@@ -22,36 +41,76 @@ const handleMenu = () => {
         dark:text-[#838383]
         font-semibold
         py-5
-        my-2
-        hover:bg-[#E36D85] hover:text-white
+        max-h-[4.5rem]hover:text-white
         dark:hover:text-white
-        pl-2
-        w-60
+        w-40
         rounded-md
         cursor-pointer
         transition
         ease-in-out
         duration-150
+        md:w-60
+        translate-x-[10.5rem]
+        sm:translate-x-48
       "
-      :key="index"
-      v-for="menuItem in (index, menuItemList)"
+      :class="{
+        close: stateOfMenu,
+        active: menuItem.active,
+        'bg-[#e36d85]': !stateOfMenu&&menuItem.active,
+      }"
+      :key="menuItem.id"
+      v-for="menuItem in menuItems"
+      @click="changeMenuValue(menuItem.id)"
     >
-      <i :class="'ri-' + menuItem.icon" class="text-xl ml-10"></i>
-      <span class="ml-5 text-xl">{{ menuItem.title }}</span>
+      <i :class="['ri-' + menuItem.icon]" class="text-xl ml-5"></i>
+
+      <span v-if="!stateOfMenu" class="ml-5 text-md md:text-xl">{{
+        menuItem.title
+      }}</span>
     </div>
   </div>
 </template>
+<script setup>
+import menuItemList from "./menuItemList";
+import { ref, inject } from "vue";
+const stateOfMenu = inject("stateOfMenu");
+const menuItems = ref(menuItemList);
+const changeMenuValue = (menuItemId) => {
+  console.log(menuItemId);
+  menuItems.value.forEach((menuItem) => {
+    if (menuItemId == menuItem.id) {
+      menuItem.active = true;
+    } else {
+      menuItem.active = false;
+    }
+    console.log(menuItem.active);
+  });
+};
 
+const handleMenu = () => {
+  console.log("asdfasdf");
+  stateOfMenu.value = !stateOfMenu.value;
+};
+</script>
 <style lang="scss" scoped>
-.closeIcon {
-  animation: rotate 1s linear infinite;
+.sidebar {
+  height: 100vh;
+  .open.active {
+    color: #fff;
+  }
+  .closeIcon {
+    transform: translateX(500px) rotate(180deg) !important;
+  }
 }
-@keyframes rotate {
-  0% {
-    transform: scale(1.1);
-  }
-  100% {
-    transform: scale(1);
-  }
+
+.sidebar.close {
+  height: 100vh;
+  transform: translateX(-200px);
+
+}
+.sidebar.open {
+  height: 100vh;
+  transform: translateX(-180px) translateY(2px);
+
 }
 </style>
