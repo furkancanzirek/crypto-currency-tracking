@@ -1,6 +1,6 @@
 <template>
   <div class="page dark:bg-black w-full h-screen">
-    <div class="navbar text-black dark:text-white dark:bg-black relative">
+    <div class="navbar text-black dark:text-white dark:bg-black">
       <div
         class="
           topNavbar
@@ -15,7 +15,7 @@
         <div class="topNavbarLeft flex items-center">
           <div class="logo flex items-center w-30 sm:w-60">
             <img
-              class="h-24 ml-0 md:ml-3"
+              class="h-20 sm:h-24 ml-0 md:ml-3"
               src="/static/img/layout/logo.png"
               alt=""
             />
@@ -23,7 +23,7 @@
               QuickCrypto
             </h1>
           </div>
-          <h2 class="text-2xl sm:text-3xl font-bold ml-5 sm:ml-20">
+          <h2 class="text-2xl sm:text-3xl font-bold ml-1 sm:ml-20">
             Dashboard
           </h2>
         </div>
@@ -61,12 +61,78 @@
               placeholder="Search Cryptocurrency"
             />
           </div>
-          <button class="notification hidden md:inline lg:hidden mr-5">
+          <Menu
+            as="div"
+            class="relative inline-block text-left focus:outline-none"
+          >
+            <div>
+              <MenuButton class="focus:outline-none">
+                <button class="more inline md:hidden mr-5">
+                  <i class="ri-more-fill text-2xl dark:text-[#ccc]"></i>
+                </button>
+              </MenuButton>
+            </div>
+
+            <MenuItems
+              class="
+                absolute
+                right-0
+                mt-2
+                w-56
+                origin-top-right
+                divide-y divide-gray-100
+                rounded-md
+                bg-white
+                dark:bg-black
+                ring-1 ring-black ring-opacity-5
+                focus:outline-none
+                z-10
+                shadow-2xl
+              "
+              :class="[darkMode ? 'darkShadow' :'']"
+            >
+              <div class="h-72 w-72">asdfasdfasdfasdf</div>
+            </MenuItems>
+          </Menu>
+          <Menu as="div" class="relative inline-block text-left">
+            <div>
+              <MenuButton class="">
+                <button class="notification hidden md:inline mr-5">
+                  <i class="ri-notification-fill dark:text-[#ccc]"></i>
+                </button>
+              </MenuButton>
+            </div>
+
+            <MenuItems
+              class="
+                absolute
+                right-0
+                mt-2
+                w-56
+                origin-top-right
+                divide-y divide-gray-100
+                rounded-md
+                bg-white
+                dark:bg-black
+                ring-1 ring-black ring-opacity-5
+                focus:outline-none
+                z-10
+                shadow-2xl
+              "
+            >
+              <div
+                class="h-72 w-72"
+                 :class="[darkMode ? 'darkShadow' :'']"
+              >
+                Notificationdafsadf
+              </div>
+            </MenuItems>
+          </Menu>
+
+          <button class="search hidden md:inline lg:hidden mr-5">
             <SearchIcon class="h-5 w-5 dark:text-[#ccc]" />
           </button>
-          <button class="notification hidden md:inline mr-5">
-            <BellIcon class="h-5 w-5 dark:text-[#ccc]" />
-          </button>
+
           <button
             @click="changeThemeMode"
             class="darkMode mr-5 hidden md:inline"
@@ -92,12 +158,28 @@
           md:w-72
           absolute
           pl-5
-          relative
         "
       >
         <menuItems />
       </div>
-      <div class="content" :class="{'sm:pl-80':stateOfMenu,'pl-10':stateOfMenu}"></div>
+      <div
+        class="
+          rightNavbar
+          text-black
+          dark:text-white dark:bg-black
+          w-60
+          md:w-72
+          absolute
+          bg-white
+          p-5
+          right-1
+          shadow-2xl
+          h-[88.5vh]
+        "
+        :class="[darkMode ? 'darkShadow' :'']"
+      >
+        <messages />
+      </div>
     </div>
   </div>
 </template>
@@ -105,9 +187,11 @@
 
 
 <script setup>
-import { provide, ref } from "vue";
+import { provide, ref ,onMounted} from "vue";
 import menuItems from "../menuItems/menuItems.vue";
+import messages from "@/features/layout/messages.vue";
 import { useColorMode } from "@vueuse/core";
+import { Menu, MenuButton, MenuItems, MenuItem } from "@headlessui/vue";
 import {
   InboxIcon,
   BellIcon,
@@ -115,19 +199,35 @@ import {
   MoonIcon,
   SearchIcon,
 } from "@heroicons/vue/solid";
-const darkMode = ref(false);
-const mode = useColorMode();
-const stateOfMenu = ref(true);
 
+const mode = useColorMode();
+const darkMode = ref(mode.value=='light'?false:true);
+const stateOfMenu = ref(true);
+const stateOfMessages = ref(false);
 const changeThemeMode = () => {
   console.log("asdasdasd");
   mode.value = mode.value == "light" ? "dark" : "light";
   darkMode.value = !darkMode.value;
 };
+provide("stateOfMessages", stateOfMessages);
 provide("stateOfMenu", stateOfMenu);
+onMounted(()=>{
+  console.log(darkMode.value);
+})
 </script>
 <style lang="scss">
 @import "@/config/theme/themeVariables.scss";
 </style>
 <style lang="scss" scoped>
+.content {
+  width: calc(100vw - 340px);
+}
+.boxShadow {
+  box-shadow: rgba(50, 50, 93, 0.25) 0px 30px 60px -12px,
+    rgba(0, 0, 0, 0.3) 0px 18px 36px -18px;
+}
+.darkShadow {
+  box-shadow: rgb(255 255 255 / 20%) 0px 0px 15px,
+    rgb(255 255 255 / 15%) 0px 0px 3px 1px;
+}
 </style>

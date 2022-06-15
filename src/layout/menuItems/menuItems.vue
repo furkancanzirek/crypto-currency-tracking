@@ -56,7 +56,8 @@
       :class="{
         close: stateOfMenu,
         active: menuItem.active,
-        'bg-[#e36d85]': !stateOfMenu&&menuItem.active,
+        open: !stateOfMenu && menuItem.active,
+        'bg-[#e36d85]': !stateOfMenu && menuItem.active,
       }"
       :key="menuItem.id"
       v-for="menuItem in menuItems"
@@ -94,23 +95,24 @@ const handleMenu = () => {
 </script>
 <style lang="scss" scoped>
 .sidebar {
-  height: 100vh;
+  height: calc(100vh - 130px);
   .open.active {
     color: #fff;
   }
   .closeIcon {
     transform: translateX(500px) rotate(180deg) !important;
   }
+  .close {
+    width: 15px !important;
+  }
 }
 
 .sidebar.close {
-  height: 100vh;
+  height: calc(100vh - 130px);
   transform: translateX(-200px);
-
 }
 .sidebar.open {
-  height: 100vh;
+  height: calc(100vh - 130px);
   transform: translateX(-180px) translateY(2px);
-
 }
 </style>
