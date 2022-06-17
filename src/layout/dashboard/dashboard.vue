@@ -59,46 +59,47 @@
               "
               type="text"
               placeholder="Search Cryptocurrency"
+              v-model="selectedCoin"
+              @blur="handleSearchBar"
+              @focus="handleSearchBar"
             />
-          </div>
-          <Menu
-            as="div"
-            class="relative inline-block text-left focus:outline-none"
-          >
-            <div>
-              <MenuButton class="focus:outline-none">
-                <button class="more inline md:hidden mr-5">
-                  <i class="ri-more-fill text-2xl dark:text-[#ccc]"></i>
-                </button>
-              </MenuButton>
-            </div>
-
-            <MenuItems
+            <div
               class="
+                searchValue
                 absolute
-                right-0
-                mt-2
-                w-56
-                origin-top-right
-                divide-y divide-gray-100
+                top-[3.3rem]
+                h-72
+                w-72
                 rounded-md
+                focus:outline-none
                 bg-white
                 dark:bg-black
-                ring-1 ring-black ring-opacity-5
-                focus:outline-none
                 z-10
                 shadow-2xl
+                overflow-y-scroll
+                cursor-pointer
               "
-              :class="[darkMode ? 'darkShadow' :'']"
+              :class="{
+                darkShadow: darkMode,
+              }"
+              
             >
-              <div class="h-72 w-72">asdfasdfasdfasdf</div>
-            </MenuItems>
-          </Menu>
-          <Menu as="div" class="relative inline-block text-left">
+              <div class="" v-for="coin in filteredCoin" :key="coin" :value="coin">
+                {{ coin }}
+              </div>
+            </div>
+          </div>
+
+          <Menu as="div" class="relative inline-block text-left mr-5">
             <div>
               <MenuButton class="">
-                <button class="notification hidden md:inline mr-5">
-                  <i class="ri-notification-fill dark:text-[#ccc]"></i>
+                <button class="notification hidden md:inline">
+                  <i
+                    class="ri-notification-fill dark:text-[#ccc]"
+                    :class="{
+                      'icon-active': stateOfNotifications,
+                    }"
+                  ></i>
                 </button>
               </MenuButton>
             </div>
@@ -108,7 +109,7 @@
                 absolute
                 right-0
                 mt-2
-                w-56
+                w-72
                 origin-top-right
                 divide-y divide-gray-100
                 rounded-md
@@ -118,17 +119,58 @@
                 focus:outline-none
                 z-10
                 shadow-2xl
+                overflow-y-scroll
               "
+              :class="{
+                darkShadow: darkMode,
+              }"
+              @blur="handleNotifications"
+              @focus="handleNotifications"
             >
-              <div
-                class="h-72 w-72"
-                 :class="[darkMode ? 'darkShadow' :'']"
-              >
-                Notificationdafsadf
-              </div>
+              <notifications />
             </MenuItems>
           </Menu>
+          <Menu as="div" class="relative inline-block text-left mr-5">
+            <div>
+              <MenuButton class="">
+                <button class="messages hidden md:inline">
+                  <i
+                    class="ri-chat-3-fill dark:text-[#ccc]"
+                    :class="{
+                      'icon-active': stateOfMessages,
+                    }"
+                  ></i>
+                </button>
+              </MenuButton>
+            </div>
 
+            <MenuItems
+              class="
+                absolute
+                right-0
+                mt-2
+                w-72
+                origin-top-right
+                divide-y divide-gray-100
+                rounded-md
+                bg-white
+                dark:bg-black
+                ring-1 ring-black ring-opacity-5
+                focus:outline-none
+                z-10
+                shadow-2xl
+                overflow-y-scroll
+                h-[50vh]
+              "
+              :class="{
+                darkShadow: darkMode,
+              }"
+              @blur="handleMessages"
+              @focus="handleMessages"
+            >
+              <messages />
+            </MenuItems>
+          </Menu>
           <button class="search hidden md:inline lg:hidden mr-5">
             <SearchIcon class="h-5 w-5 dark:text-[#ccc]" />
           </button>
@@ -137,10 +179,10 @@
             @click="changeThemeMode"
             class="darkMode mr-5 hidden md:inline"
           >
-            <SunIcon v-if="!darkMode" class="h-5 w-5 dark:text-[#ccc]" />
-            <MoonIcon v-if="darkMode" class="h-5 w-5 dark:text-[#ccc]" />
+            <i v-if="!darkMode" class="ri-sun-fill dark:text-[#ccc]"></i>
+            <i v-if="darkMode" class="ri-moon-clear-fill dark:text-[#ccc]"></i>
           </button>
-          <button class="avatar mr-5">
+          <button class="avatar mr-5 w-full">
             <img
               class="h-12 w-12 rounded-full"
               src="static/img/layout/avatar.jpg"
@@ -149,6 +191,7 @@
           </button>
         </div>
       </div>
+
       <div
         class="
           leftNavbar
@@ -162,24 +205,6 @@
       >
         <menuItems />
       </div>
-      <div
-        class="
-          rightNavbar
-          text-black
-          dark:text-white dark:bg-black
-          w-60
-          md:w-72
-          absolute
-          bg-white
-          p-5
-          right-1
-          shadow-2xl
-          h-[88.5vh]
-        "
-        :class="[darkMode ? 'darkShadow' :'']"
-      >
-        <messages />
-      </div>
     </div>
   </div>
 </template>
@@ -187,9 +212,10 @@
 
 
 <script setup>
-import { provide, ref ,onMounted} from "vue";
+import { provide, ref, onMounted, computed } from "vue";
 import menuItems from "../menuItems/menuItems.vue";
 import messages from "@/features/layout/messages.vue";
+import notifications from "@/features/layout/notifications.vue";
 import { useColorMode } from "@vueuse/core";
 import { Menu, MenuButton, MenuItems, MenuItem } from "@headlessui/vue";
 import {
@@ -201,24 +227,79 @@ import {
 } from "@heroicons/vue/solid";
 
 const mode = useColorMode();
-const darkMode = ref(mode.value=='light'?false:true);
+const darkMode = ref(mode.value == "light" ? false : true);
 const stateOfMenu = ref(true);
 const stateOfMessages = ref(false);
+const stateOfNotifications = ref(false);
+const stateOfSearchBar = ref(false);
 const changeThemeMode = () => {
   console.log("asdasdasd");
   mode.value = mode.value == "light" ? "dark" : "light";
   darkMode.value = !darkMode.value;
 };
+const handleMessages = () => {
+  stateOfMessages.value = !stateOfMessages.value;
+};
+const handleNotifications = () => {
+  stateOfNotifications.value = !stateOfNotifications.value;
+};
+const handleSearchBar = () => {
+  console.log(handleSearchBar.value);
+  stateOfSearchBar.value = !stateOfSearchBar.value;
+};
+const coin = [
+  "BTC/USDT",
+  "ETH/USDT",
+  "SOL/USDT",
+  "AVAX/USDT",
+  "XRP/USDT",
+  "BTC/USDT",
+  "ETH/USDT",
+  "SOL/USDT",
+  "AVAX/USDT",
+  "XRP/USDT",
+  "BTC/USDT",
+  "ETH/USDT",
+  "SOL/USDT",
+  "AVAX/USDT",
+  "XRP/USDT",
+];
+const selectedCoin = ref("");
+const filteredCoin = computed(() =>
+  selectedCoin.value === ""
+    ? coin
+    : coin.filter((coin) => {
+        return coin.toLowerCase().includes(selectedCoin.value.toLowerCase());
+      })
+);
 provide("stateOfMessages", stateOfMessages);
 provide("stateOfMenu", stateOfMenu);
-onMounted(()=>{
+onMounted(() => {
   console.log(darkMode.value);
-})
+});
 </script>
 <style lang="scss">
 @import "@/config/theme/themeVariables.scss";
+* {
+  &::-webkit-scrollbar-track {
+    -webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.3);
+    background-color: #f5f5f5;
+  }
+
+  &::-webkit-scrollbar {
+    width: 6px;
+    background-color: #f5f5f5;
+  }
+
+  &::-webkit-scrollbar-thumb {
+    background-color: rgba(0, 0, 0, 0.5);
+  }
+}
 </style>
 <style lang="scss" scoped>
+.page {
+  overflow-x: auto;
+}
 .content {
   width: calc(100vw - 340px);
 }
@@ -229,5 +310,14 @@ onMounted(()=>{
 .darkShadow {
   box-shadow: rgb(255 255 255 / 20%) 0px 0px 15px,
     rgb(255 255 255 / 15%) 0px 0px 3px 1px;
+}
+.icon-active {
+  color: #e36d85;
+}
+.messageInactive {
+  opacity: 0;
+}
+.messageActive {
+  opacity: 1;
 }
 </style>

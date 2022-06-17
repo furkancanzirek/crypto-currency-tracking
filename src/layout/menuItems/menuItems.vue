@@ -41,8 +41,9 @@
         dark:text-[#838383]
         font-semibold
         py-5
-        max-h-[4.5rem]hover:text-white
+        max-h-[4.5rem]
         dark:hover:text-white
+        hover:text-white
         w-40
         rounded-md
         cursor-pointer
@@ -52,12 +53,14 @@
         md:w-60
         translate-x-[10.5rem]
         sm:translate-x-48
+        mt-[0.2rem]
       "
       :class="{
         close: stateOfMenu,
         active: menuItem.active,
         open: !stateOfMenu && menuItem.active,
         'bg-[#e36d85]': !stateOfMenu && menuItem.active,
+        'hover:bg-[#e36d85]': !stateOfMenu && !menuItem.active,
       }"
       :key="menuItem.id"
       v-for="menuItem in menuItems"
