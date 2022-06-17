@@ -82,10 +82,49 @@
               :class="{
                 darkShadow: darkMode,
               }"
-              
+              v-if="stateOfSearchBar"
             >
-              <div class="" v-for="coin in filteredCoin" :key="coin" :value="coin">
-                {{ coin }}
+              <div
+                class="
+                  messageBox
+                  flex
+                  hover:bg-stone-100
+                  dark:hover:bg-stone-800
+                  p-4
+                  m-1
+                  rounded-md
+                  cursor-pointer
+                "
+                v-for="coin in filteredCoin"
+                :key="coin"
+                :value="coin"
+              >
+                <img
+                  class="w-12 h-12 rounded-full object-contain"
+                  src="https://cryptologos.cc/logos/avalanche-avax-logo.svg?v=022"
+                  alt=""
+                />
+                <div class="content ml-2 flex flex-col justify-end">
+                  <div class="name font-bold">{{ coin }}</div>
+                  <div class="priceWrapper flex">
+                    <div class="price font-medium">32500</div>
+                    <div
+                      class="
+                        ratio
+                        ml-5
+                        flex
+                        items-center
+                        font-medium
+                        justify-center
+                      "
+                    >
+                      5%
+                      <i
+                        class="ri-arrow-up-s-fill ml-1 font-bold text-[#00B786]"
+                      ></i>
+                    </div>
+                  </div>
+                </div>
               </div>
             </div>
           </div>
@@ -197,14 +236,14 @@
           leftNavbar
           text-black
           dark:text-white dark:bg-black
-          w-60
-          md:w-72
           absolute
           pl-5
+          z-10
         "
       >
         <menuItems />
       </div>
+      <div class="content absolute bg-white right-0"></div>
     </div>
   </div>
 </template>
@@ -252,17 +291,17 @@ const coin = [
   "ETH/USDT",
   "SOL/USDT",
   "AVAX/USDT",
-  "XRP/USDT",
-  "BTC/USDT",
-  "ETH/USDT",
-  "SOL/USDT",
-  "AVAX/USDT",
-  "XRP/USDT",
-  "BTC/USDT",
-  "ETH/USDT",
-  "SOL/USDT",
-  "AVAX/USDT",
-  "XRP/USDT",
+  "XRP1/USDT",
+  "BTC2/USDT",
+  "ETH2/USDT",
+  "SOL3/USDT",
+  "AVA3X/USDT",
+  "XR1P/USDT",
+  "BT3C/USDT",
+  "ET3H/USDT",
+  "SO4L/USDT",
+  "AV5AX/USDT",
+  "XR5P/USDT",
 ];
 const selectedCoin = ref("");
 const filteredCoin = computed(() =>
@@ -301,7 +340,8 @@ onMounted(() => {
   overflow-x: auto;
 }
 .content {
-  width: calc(100vw - 340px);
+  min-height: calc(100% - 105px);
+  width: calc(100vw - 100px);
 }
 .boxShadow {
   box-shadow: rgba(50, 50, 93, 0.25) 0px 30px 60px -12px,

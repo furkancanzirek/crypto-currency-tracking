@@ -29,6 +29,7 @@
     :class="{
       close: stateOfMenu,
       open: !stateOfMenu,
+      'w-60 md:w-72': !stateOfMenu,
     }"
     @mouseenter="handleMenu"
     @mouseleave="handleMenu"
@@ -106,7 +107,7 @@ const handleMenu = () => {
     transform: translateX(500px) rotate(180deg) !important;
   }
   .close {
-    width: 15px !important;
+    width: 80px !important;
   }
 }
 
