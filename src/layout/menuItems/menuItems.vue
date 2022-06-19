@@ -1,6 +1,6 @@
 
 
-<template>
+<template >
   <div
     @click="handleMenu"
     v-if="!stateOfMenu"
@@ -18,14 +18,15 @@
       transition
       ease-in-out
       duration-300
-      translate-x-[10.5rem]
+      translate-x-[11.8rem]
+      mt-5
     "
     :class="{ closeIcon: stateOfMenu }"
   >
     <i class="ri-arrow-left-s-fill text-3xl p-1"></i>
   </div>
   <div
-    class="sidebar relative transition ease-in-out duration-150"
+    class="sidebar relative transition ease-in-out duration-150 mt-5"
     :class="{
       close: stateOfMenu,
       open: !stateOfMenu,
@@ -52,7 +53,7 @@
         ease-in-out
         duration-150
         md:w-60
-        translate-x-[10.5rem]
+        translate-x-[12rem]
         sm:translate-x-48
         mt-[0.2rem]
       "
@@ -60,6 +61,7 @@
         close: stateOfMenu,
         active: menuItem.active,
         open: !stateOfMenu && menuItem.active,
+        ' justify-center': stateOfMenu,
         'bg-[#e36d85]': !stateOfMenu && menuItem.active,
         'hover:bg-[#e36d85]': !stateOfMenu && !menuItem.active,
       }"
@@ -72,6 +74,79 @@
       <span v-if="!stateOfMenu" class="ml-5 text-md md:text-xl">{{
         menuItem.title
       }}</span>
+    </div>
+    <div class="bottomOptions absolute bottom-0">
+      <div
+        class="
+          menuItem
+          flex
+          items-center
+          dark:text-[#838383]
+          font-semibold
+          py-5
+          max-h-[4.5rem]
+          dark:hover:text-white
+          hover:text-[#E36D85]
+          w-40
+          rounded-md
+          cursor-pointer
+          transition
+          ease-in-out
+          duration-150
+          md:w-60
+          translate-x-[12rem]
+          sm:translate-x-48
+          mt-[0.2rem]
+        "
+        :class="{
+          close: stateOfMenu,
+        }"
+      >
+        <i
+          class="ri-settings-4-fill text-xl ml-5"
+          :class="{
+            'ml-10': stateOfMenu,
+          }"
+        ></i>
+
+        <span v-if="!stateOfMenu" class="ml-5 text-md md:text-xl"
+          >Settings</span
+        >
+      </div>
+      <div
+        class="
+          menuItem
+          flex
+          items-center
+          dark:text-[#838383]
+          font-semibold
+          py-5
+          max-h-[4.5rem]
+          dark:hover:text-white
+          hover:text-[#E36D85]
+          w-40
+          rounded-md
+          cursor-pointer
+          transition
+          ease-in-out
+          duration-150
+          md:w-60
+          translate-x-[12rem]
+          sm:translate-x-48
+          mt-[0.2rem]
+        "
+        :class="{
+          close: stateOfMenu,
+        }"
+      >
+        <i
+          class="ri-logout-box-r-fill text-xl ml-5"
+          :class="{
+            'ml-10': stateOfMenu,
+          }"
+        ></i>
+        <span v-if="!stateOfMenu" class="ml-5 text-md md:text-xl">Logout</span>
+      </div>
     </div>
   </div>
 </template>

@@ -1,5 +1,5 @@
 <template>
-  <div class="page dark:bg-black w-full h-screen">
+  <div class="page w-full h-screen dark:bg-black">
     <div class="navbar text-black dark:text-white dark:bg-black">
       <div
         class="
@@ -9,13 +9,17 @@
           w-full
           justify-between
           border-b
-          dark:border-black
+          dark:border-black dark:bg-black
+          bg-white
+          fixed
+          top-0
+          z-[50]
         "
       >
         <div class="topNavbarLeft flex items-center">
           <div class="logo flex items-center w-30 sm:w-60">
             <img
-              class="h-20 sm:h-24 ml-0 md:ml-3"
+              class="h-20 sm:h-24 ml-0 lg:ml-3"
               src="/static/img/layout/logo.png"
               alt=""
             />
@@ -23,9 +27,7 @@
               QuickCrypto
             </h1>
           </div>
-          <h2 class="text-2xl sm:text-3xl font-bold ml-1 sm:ml-20">
-            Dashboard
-          </h2>
+          <h2 class="text-xl sm:text-3xl font-bold ml-1 sm:ml-20">Dashboard</h2>
         </div>
         <div class="topNavbarRight flex items-center">
           <div class="searchBar relative">
@@ -132,7 +134,7 @@
           <Menu as="div" class="relative inline-block text-left mr-5">
             <div>
               <MenuButton class="">
-                <button class="notification hidden md:inline">
+                <button class="notification">
                   <i
                     class="ri-notification-fill dark:text-[#ccc]"
                     :class="{
@@ -172,7 +174,7 @@
           <Menu as="div" class="relative inline-block text-left mr-5">
             <div>
               <MenuButton class="">
-                <button class="messages hidden md:inline">
+                <button class="messages">
                   <i
                     class="ri-chat-3-fill dark:text-[#ccc]"
                     :class="{
@@ -214,10 +216,7 @@
             <SearchIcon class="h-5 w-5 dark:text-[#ccc]" />
           </button>
 
-          <button
-            @click="changeThemeMode"
-            class="darkMode mr-5 hidden md:inline"
-          >
+          <button @click="changeThemeMode" class="darkMode mr-5">
             <i v-if="!darkMode" class="ri-sun-fill dark:text-[#ccc]"></i>
             <i v-if="darkMode" class="ri-moon-clear-fill dark:text-[#ccc]"></i>
           </button>
@@ -236,14 +235,19 @@
           leftNavbar
           text-black
           dark:text-white dark:bg-black
-          absolute
-          pl-5
-          z-10
+          bg-white
+          fixed
+          top-[5.4rem]
+          sm:top-[6.5rem]
+          z-40
+          h-screen
         "
       >
         <menuItems />
       </div>
-      <div class="content absolute bg-white right-0"></div>
+      <div class="content translate-x-16 translate-y-28 right-0 z-[1] h-full text-black top-28 px-2">
+        <router-view></router-view>
+      </div>
     </div>
   </div>
 </template>
