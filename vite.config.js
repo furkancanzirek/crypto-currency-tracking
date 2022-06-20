@@ -10,6 +10,7 @@ export default defineConfig({
   plugins: [
 		vue(),
 		vuetify({ autoImport: true }),
+    
 ],
 server: { 
   host: '0.0.0.0'

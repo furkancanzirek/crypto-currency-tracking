@@ -1,19 +1,7 @@
 <template>
-  <div
-    class="
-      currencySmallGraphWrapper
-      grid grid-cols-1
-      sm:grid-cols-2
-      md:grid-cols-4
-      gap-4
-      lg:gap-4
-    "
-  >
-    <smallSliderGraph />
-  </div>
-  <div
-    class="currencyBigGraphWrapper grid col-span-2 lg:grid-cols-12 mt-5 h-"
-  >
+<smallSliderGraph />
+
+  <div class="currencyBigGraphWrapper grid col-span-2 lg:grid-cols-12 mt-5 h-">
     <bigGraph />
     <currencySelector />
   </div>
@@ -25,5 +13,15 @@
 import smallSliderGraph from "../../features/dashboard/smallSliderGraph.vue";
 import bigGraph from "../../features/dashboard/bigGraph.vue";
 import currencySelector from "../../features/dashboard/currencySelector.vue";
-import marketingValues from "../../features/dashboard/marketingValues.vue"
+import marketingValues from "../../features/dashboard/marketingValues.vue";
+import { Swiper, SwiperSlide } from "swiper/vue";
+
+// Import Swiper styles
+import "swiper/css";
+
+import "swiper/css/pagination";
+import "swiper/css/navigation";
+
+// import required modules
+import { Pagination, Navigation } from "swiper";
 </script>

@@ -13,9 +13,15 @@
     "@heroicons/vue": "^1.0.6",
     "@mdi/font": "5.9.55",
     "@vueuse/core": "^8.6.0",
+    "apexcharts": "^3.35.3",
+    "chart.js": "^3.8.0",
+    "chartjs": "^0.3.24",
     "roboto-fontface": "*",
+    "swiper": "^8.2.4",
     "vue": "^3.2.25",
     "vue-router": "^4.0.15",
+    "vue-types": "^4.1.1",
+    "vue3-apexcharts": "^1.4.1",
     "webfontloader": "^1.0.0"
   },
   "devDependencies": {

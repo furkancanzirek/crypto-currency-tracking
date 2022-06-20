@@ -2,12 +2,11 @@
   <div
     class="
       currencySmallGraph
-      bg-black
-      col-span-2
-      lg:col-span-1
+      bg-white
+      dark:bg-black
       h-56
       flex
-      text-white
+      dark:text-white
       justify-between
       p-8
     "
@@ -28,6 +27,12 @@
       </div>
       <div class="price mt-3 text-3xl font-bold">$44,347</div>
     </div>
-    <span class="currencyRatio text-[#29A5E9] font-semibold"> +50.12% </span>
+    <span class="currencyRatio text-[#D3657C] font-semibold translate-x-5"> -10.12% </span>
+    <div class="absolute bottom-0"><chart :positive="false"/></div>
   </div>
 </template>
+
+<script setup>
+import chart from "@/components/chart/chart.vue";
+
+</script>
