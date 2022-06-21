@@ -28,7 +28,7 @@
       <div class="price mt-3 text-3xl font-bold">$44,347</div>
     </div>
     <span class="currencyRatio text-[#D3657C] font-semibold translate-x-5"> -10.12% </span>
-    <div class="absolute bottom-0"><chart :positive="false"/></div>
+    <div class="absolute bottom-0"><chart :positive="false" /></div>
   </div>
 </template>
 

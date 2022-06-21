@@ -31,6 +31,10 @@ const props = defineProps({
     type: Boolean,
     default: true,
   },
+  type: {
+    type: String,
+    default: "Area",
+  },
 });
 const chartOptions = ref({
   chart: {
@@ -51,8 +55,16 @@ const chartOptions = ref({
     sparkline: {
       enabled: true,
     },
+    brush: {
+      enabled: false,
+      target: false,
+      autoScaleYaxis: false,
+    },
   },
-  colors: props.positive?["#1C668F"]:["#753A46"],
+  tooltip: {
+    theme: "dark",
+  },
+  colors: props.positive ? ["#1C668F"] : ["#752B45"],
   fill: {
     colors: props.positive ? ["#1C668F"] : ["#5C2F37"],
     opacity: 0.5,
@@ -63,9 +75,9 @@ const chartOptions = ref({
       shadeIntensity: 1,
       gradientToColors: props.positive ? ["#0B171E"] : ["#251518"],
       inverseColors: false,
-      opacityFrom: 1,
-      opacityTo: 0.9,
-      stops: [0, 100],
+      opacityFrom: props.type == "Area" ? 1 : 0,
+      opacityTo: props.type == "Area" ? 0.9 : 0,
+      stops: (props.type = "Area" ? [0, 100] : [0, 0]),
     },
   },
   xaxis: {
