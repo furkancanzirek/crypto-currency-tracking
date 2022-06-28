@@ -133,6 +133,7 @@ Furkan Can Zirek  - furkancanzirek@gmail.com
 * [Evan You](https://github.com/yyx990803)
 * [Vite](https://github.com/vitejs/vite)
 * [Tailwind](https://github.com/tailwindlabs/tailwindcss)
+* [Remix Icon](https://github.com/Remix-Design/RemixIcon)
 
 
 <p align="right">(<a href="#top">back to top</a>)</p>
