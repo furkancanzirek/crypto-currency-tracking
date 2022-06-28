@@ -168,7 +168,7 @@
               @blur="handleNotifications"
               @focus="handleNotifications"
             >
-             asdfasdf
+              <notifications />
             </MenuItems>
           </Menu>
           <Menu as="div" class="relative inline-block text-left mr-5">
