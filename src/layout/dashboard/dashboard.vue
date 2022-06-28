@@ -168,7 +168,7 @@
               @blur="handleNotifications"
               @focus="handleNotifications"
             >
-              <notifications />
+             asdfasdf
             </MenuItems>
           </Menu>
           <Menu as="div" class="relative inline-block text-left mr-5">
@@ -257,7 +257,7 @@
 <script setup>
 import { provide, ref, onMounted, computed } from "vue";
 import menuItems from "../menuItems/menuItems.vue";
-import messages from "../..//features/layout/messages.vue";
+import messages from "../../features/layout/messages.vue";
 import notifications from "../../features/layout/notifications.vue";
 import { useColorMode } from "@vueuse/core";
 import { Menu, MenuButton, MenuItems, MenuItem } from "@headlessui/vue";
