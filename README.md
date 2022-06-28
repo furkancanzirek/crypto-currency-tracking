@@ -101,7 +101,7 @@ _You can follow the steps below._
 
 - [x] Add README.md
 - [x] Create folder structure
-- [ ] Release the first version
+- [x] Release the first version
 - [ ] Multi-language Support
     - [ ] English
 - [ ] Release the second version
@@ -131,6 +131,8 @@ Furkan Can Zirek  - furkancanzirek@gmail.com
 ## Acknowledgments
 
 * [Evan You](https://github.com/yyx990803)
+* [Vite](https://github.com/vitejs/vite)
+* [Tailwind](https://github.com/tailwindlabs/tailwindcss)
 
 
 <p align="right">(<a href="#top">back to top</a>)</p>
