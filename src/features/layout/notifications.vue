@@ -1,7 +1,7 @@
 <template>
   <div class="notificationBox h-72" >
     <notification :key="notification" v-for="notification in 15 "/>
-
+    deneme
   </div>
 </template>
 
