@@ -6,6 +6,6 @@
 </template>
 
 <script setup>
-import notification from "@/components/layout/notifications/notification.vue";
+import notification from "../../components/layout/notifications/notification.vue";
 
 </script>

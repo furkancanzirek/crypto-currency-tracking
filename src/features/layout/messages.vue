@@ -6,5 +6,5 @@
 </template>
 
 <script setup>
-import message from "@/components/layout/messages/message.vue";
+import message from "../..//components/layout/messages/message.vue";
 </script>
