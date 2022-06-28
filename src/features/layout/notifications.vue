@@ -1,6 +1,6 @@
 <template>
   <div class="notificationBox h-72" >
-    <notification v-for="notification in 15 "/>
+    <notification :key="notification" v-for="notification in 15 "/>
 
   </div>
 </template>

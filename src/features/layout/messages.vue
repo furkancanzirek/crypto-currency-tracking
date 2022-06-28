@@ -1,6 +1,6 @@
 <template>
   <div class="messagesBox">
-    <message v-for="message in 15" />
+    <message :key="message" v-for="message in 15" />
 
   </div>
 </template>
