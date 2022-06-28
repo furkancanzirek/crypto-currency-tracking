@@ -257,8 +257,8 @@
 <script setup>
 import { provide, ref, onMounted, computed } from "vue";
 import menuItems from "../menuItems/menuItems.vue";
-import messages from "@/features/layout/messages.vue";
-import notifications from "@/features/layout/notifications.vue";
+import messages from "../..//features/layout/messages.vue";
+import notifications from "../../features/layout/notifications.vue";
 import { useColorMode } from "@vueuse/core";
 import { Menu, MenuButton, MenuItems, MenuItem } from "@headlessui/vue";
 import {
