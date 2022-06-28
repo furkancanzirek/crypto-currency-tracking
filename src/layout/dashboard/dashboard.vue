@@ -223,7 +223,7 @@
           <button class="avatar mr-5 w-full">
             <img
               class="h-12 w-12 rounded-full"
-              src="static/img/layout/avatar.jpg"
+              src="/static/img/layout/avatar.jpg"
               alt=""
             />
           </button>
