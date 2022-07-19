@@ -100,16 +100,21 @@
                 v-for="coin in filteredCoin"
                 :key="coin"
                 :value="coin"
+                @mousedown="handleSelectedCoin(coin)"
               >
                 <img
                   class="w-12 h-12 rounded-full object-contain"
-                  src="https://cryptologos.cc/logos/avalanche-avax-logo.svg?v=022"
+                  :src="coin.image"
                   alt=""
                 />
                 <div class="content ml-2 flex flex-col justify-end">
-                  <div class="name font-bold">{{ coin }}</div>
+                  <div class="name font-bold" style="text-transform: uppercase">
+                    {{ coin.symbol }}
+                  </div>
                   <div class="priceWrapper flex">
-                    <div class="price font-medium">32500</div>
+                    <div class="price font-medium">
+                      {{ coin.current_price }}
+                    </div>
                     <div
                       class="
                         ratio
@@ -120,9 +125,14 @@
                         justify-center
                       "
                     >
-                      5%
+                      {{ coin.market_cap_change_percentage_24h }} %
                       <i
+                        v-if="coin.market_cap_change_percentage_24h > 0"
                         class="ri-arrow-up-s-fill ml-1 font-bold text-[#00B786]"
+                      ></i>
+                      <i
+                        v-else
+                        class="ri-arrow-down-s-fill ml-1 font-bold text-[red]"
                       ></i>
                     </div>
                   </div>
@@ -278,17 +288,24 @@ import {
   MoonIcon,
   SearchIcon,
 } from "@heroicons/vue/solid";
-import { getAllCryptoDetailsUSD,getAllCryptoDetailsEUR } from "../../services/cryptoService";
-import {useSelectedCoinStore,useUSDCoinStore,useEURCoinStore} from "../../store/coin/coin.store"
+import {
+  getAllCryptoDetailsUSD,
+  getAllCryptoDetailsEUR,
+} from "../../services/cryptoService";
+import {
+  useSelectedCoinStore,
+  useUSDCoinStore,
+  useEURCoinStore,
+} from "../../store/coin/coin.store";
 const mode = useColorMode();
 const darkMode = ref(mode.value == "light" ? false : true);
 const stateOfMenu = ref(true);
 const stateOfMessages = ref(false);
 const stateOfNotifications = ref(false);
 const stateOfSearchBar = ref(false);
-const selectedCoinStore=useSelectedCoinStore()
-const USDCoinStore=useUSDCoinStore();
-const EURCoinStore=useEURCoinStore();
+const selectedCoinStore = useSelectedCoinStore();
+const USDCoinStore = useUSDCoinStore();
+const EURCoinStore = useEURCoinStore();
 const changeThemeMode = () => {
   console.log("asdasdasd");
   mode.value = mode.value == "light" ? "dark" : "light";
@@ -304,24 +321,37 @@ const handleSearchBar = () => {
   console.log(handleSearchBar.value);
   stateOfSearchBar.value = !stateOfSearchBar.value;
 };
-const selectedCoin=ref({})
-const changeBigGraph=()=>{
-
-}
+const selectedCoin = ref("");
+const filteredCoin = computed(() =>
+  selectedCoin.value === ""
+    ? allCryptoDatasUSD.value
+    : allCryptoDatasUSD.value.filter((coin) => {
+        return (
+          coin.name.toLowerCase().includes(selectedCoin.value.toLowerCase()) ||
+          coin.symbol.toLowerCase().includes(selectedCoin.value.toLowerCase())
+        );
+      })
+);
+const handleSelectedCoin = (coin) => {
+  console.log(coin);
+  selectedCoinStore.setSelectedCoin(coin);
+  console.log("merhaba");
+};
+const changeBigGraph = () => {};
 const allCryptoDatasUSD = ref([]);
 const allCryptoDatasEUR = ref([]);
 const getCryptoDatas = async () => {
   allCryptoDatasUSD.value = await getAllCryptoDetailsUSD();
-  USDCoinStore.setUSDCoins(await getAllCryptoDetailsUSD())
-  EURCoinStore.setEURCoins(await getAllCryptoDetailsEUR())
+  USDCoinStore.setUSDCoins(await getAllCryptoDetailsUSD());
+  EURCoinStore.setEURCoins(await getAllCryptoDetailsEUR());
   allCryptoDatasEUR.value = await getAllCryptoDetailsEUR();
 };
 
-const cryptoSelectorData=ref([]);
+const cryptoSelectorData = ref([]);
 provide("stateOfMessages", stateOfMessages);
 provide("stateOfMenu", stateOfMenu);
-provide("allCryptoDatasUSD", allCryptoDatasUSD)
-provide("allCryptoDatasEUR", allCryptoDatasEUR)
+provide("allCryptoDatasUSD", allCryptoDatasUSD);
+provide("allCryptoDatasEUR", allCryptoDatasEUR);
 
 onMounted(() => {
   console.log(darkMode.value);
