@@ -1,3 +1,4 @@
+![picture](https://github.com/furkancanzirek/crypto-currency-tracking/blob/main/crypto.png)
 <div id="top"></div>
 
 <br />
