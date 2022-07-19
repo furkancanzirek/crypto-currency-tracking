@@ -5,14 +5,54 @@
       height="400"
       type="candlestick"
       :options="chartOptions"
-      :series="props.series"
+      :series="series ? series : props.series"
     ></VueApexCharts>
   </div>
 </template>
 
 <script setup>
 import VueApexCharts from "vue3-apexcharts";
-import { ref } from "vue";
+import { ref, watch } from "vue";
+import { useSelectedCoinStore } from "../../store/coin/coin.store";
+const selectedCoinStore = useSelectedCoinStore();
+const series = ref("");
+watch(
+  () => selectedCoinStore.selectedCoin,
+  () => {
+    const coinPrices = selectedCoinStore.selectedCoin.sparkline_in_7d.price;
+    const filteredList = ref([]);
+    coinPrices.map((price, idx) => {
+      if (price>100) {
+        filteredList.value.push({
+          x: new Date(new Date().getTime() - (24 * 60 * 60 * 1000 * idx) / 24),
+          y: [
+            price,
+            price + (price / 100) * 2,
+            price - Math.floor((Math.random() * price) / 1000),
+            price - Math.floor((Math.random() * price) / 40),
+          ],
+        });
+      } else {
+        console.log("asdfasdf");
+        filteredList.value.push({
+          x: new Date(new Date().getTime() - (24 * 60 * 60 * 1000 * idx) / 24),
+          y: [
+            price,
+            price+(price/100) ,
+            price ,
+            price+Math.floor(Math.random() * price/50) -price/100,
+          ],
+        });
+      }
+    });
+    series.value = [
+      {
+        data: filteredList.value.reverse(),
+      },
+    ];
+    console.log(filteredList.value.reverse());
+  }
+);
 const props = defineProps({
   series: {
     type: Array,
@@ -294,7 +334,6 @@ const chartOptions = ref({
       target: undefined,
       autoScaleYaxis: false,
     },
-    
   },
   xaxis: {
     type: "datetime",

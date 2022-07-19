@@ -26,11 +26,12 @@
       </div>
     </div>
     <div class="graph w-full">
-      <candleStickChartVue />
+      <candleStickChartVue  />
     </div>
   </div>
 </template>
 
 <script setup>
 import candleStickChartVue from "../../components/chart/candleStickChart.vue";
+new Date(new Date().getTime() - 24*60*60*1000*2)
 </script>

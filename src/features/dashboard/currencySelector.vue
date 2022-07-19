@@ -42,18 +42,28 @@
                 <tr
                   v-for="post in posts"
                   :key="post.id"
-                  class="border-b-[0.1rem] border-b-gray-800 cursor-pointer hover:bg-gray-100 hover:text-black p-5"
+                  class="
+                    border-b-[0.1rem] border-b-gray-800
+                    cursor-pointer
+                    hover:bg-gray-100 hover:text-black
+                    p-5
+                  "
+                  @click="handleSelectedCoin(post)"
                 >
                   <td class="w-8">
                     <img
-                      :src="post.img"
+                      :src="post.image"
                       class="w-8 h-8 rounded-full object-contain"
                       alt=""
                     />
                   </td>
-                  <td class="p-5 font-medium ">{{ post.title }}</td>
-                  <td class="p-5 font-medium">{{ post.lastPrice }}</td>
-                  <td class="p-5 font-medium">{{ post.change }}</td>
+                  <td class="p-5 font-medium" style="text-transform: uppercase">
+                    {{ post.symbol }}
+                  </td>
+                  <td class="p-5 font-medium">{{ post.current_price }}</td>
+                  <td class="p-5 font-medium">
+                    {{ post.price_change_percentage_24h }}
+                  </td>
                 </tr>
               </tbody>
             </table>
@@ -64,7 +74,7 @@
                 class="relative rounded-md p-3 py-5 bg-black hover:bg-gray-800"
               >
                 <h3 class="text-sm font-medium leading-5 text-white">
-                  {{ post.title }}
+                  {{ post.symbol }}
                 </h3>
 
                 <a
@@ -85,373 +95,443 @@
 
 <script setup>
 import { TabGroup, TabList, Tab, TabPanels, TabPanel } from "@headlessui/vue";
-import { ref } from "vue";
+import { ref, inject, watch } from "vue";
+import {
+  useSelectedCoinStore,
+  useUSDCoinStore,
+  useEURCoinStore,
+} from "../../store/coin/coin.store";
+const USDCoinStore = useUSDCoinStore();
+const EURCoinStore = useEURCoinStore();
+const selectedCoinStore = useSelectedCoinStore();
+const handleSelectedCoin=(coin)=>{
+  selectedCoinStore.setSelectedCoin(coin)
+console.log("merhaba");
+}
 const categories = ref({
   FAV: [
     {
       id: 1,
-      img: "https://en.bitcoin.it/w/images/en/2/29/BC_Logo_.png",
-      title: "BTC/USDT",
-      lastPrice: "47,575.23",
-      change: "0.32",
+      image: "https://en.bitcoin.it/w/images/en/2/29/BC_Logo_.png",
+      symbol: "BTC/USDT",
+      current_price: "47,575.23",
+      price_chance_percentage_24h: -15,
       positive: true,
     },
     {
       id: 2,
-      img: "https://www.pngall.com/wp-content/uploads/10/Ethereum-Logo-PNG-HD-Image.png",
-      title: "ETH/USDT",
-      lastPrice: "7,575.23",
-      change: "2.35",
+      image:
+        "https://www.pngall.com/wp-content/uploads/10/Ethereum-Logo-PNG-HD-Image.png",
+      symbol: "ETH/USDT",
+      current_price: "7,575.23",
+      price_chance_percentage_24h: "2.35",
       positive: true,
     },
     {
       id: 3,
-      img: "https://seeklogo.com/images/S/solana-sol-logo-12828AD23D-seeklogo.com.png",
-      title: "SOL/USDT",
-      lastPrice: "120,25",
-      change: "1.35",
+      image:
+        "https://seeklogo.com/images/S/solana-sol-logo-12828AD23D-seeklogo.com.png",
+      symbol: "SOL/USDT",
+      current_price: "120,25",
+      price_chance_percentage_24h: "1.35",
       positive: false,
     },
     {
       id: 4,
-      img: "https://styles.redditmedia.com/t5_3itf3/styles/communityIcon_17n3srnx2ta71.png?width=256&s=581b6101fa8302de0542ba0737d654385e16eda9",
-      title: "AVAX/USDT",
-      lastPrice: "75.23",
-      change: "2.55",
+      image:
+        "https://styles.redditmedia.com/t5_3itf3/styles/communityIcon_17n3srnx2ta71.png?width=256&s=581b6101fa8302de0542ba0737d654385e16eda9",
+      symbol: "AVAX/USDT",
+      current_price: "75.23",
+      price_chance_percentage_24h: "2.55",
       positive: false,
     },
     {
       id: 4,
-      img: "https://styles.redditmedia.com/t5_3itf3/styles/communityIcon_17n3srnx2ta71.png?width=256&s=581b6101fa8302de0542ba0737d654385e16eda9",
-      title: "AVAX/USDT",
-      lastPrice: "75.23",
-      change: "2.55",
+      image:
+        "https://styles.redditmedia.com/t5_3itf3/styles/communityIcon_17n3srnx2ta71.png?width=256&s=581b6101fa8302de0542ba0737d654385e16eda9",
+      symbol: "AVAX/USDT",
+      current_price: "75.23",
+      price_chance_percentage_24h: "2.55",
       positive: false,
     },
     {
       id: 4,
-      img: "https://styles.redditmedia.com/t5_3itf3/styles/communityIcon_17n3srnx2ta71.png?width=256&s=581b6101fa8302de0542ba0737d654385e16eda9",
-      title: "AVAX/USDT",
-      lastPrice: "75.23",
-      change: "2.55",
+      image:
+        "https://styles.redditmedia.com/t5_3itf3/styles/communityIcon_17n3srnx2ta71.png?width=256&s=581b6101fa8302de0542ba0737d654385e16eda9",
+      symbol: "AVAX/USDT",
+      current_price: "75.23",
+      price_chance_percentage_24h: "2.55",
       positive: false,
     },
     {
       id: 4,
-      img: "https://styles.redditmedia.com/t5_3itf3/styles/communityIcon_17n3srnx2ta71.png?width=256&s=581b6101fa8302de0542ba0737d654385e16eda9",
-      title: "AVAX/USDT",
-      lastPrice: "75.23",
-      change: "2.55",
+      image:
+        "https://styles.redditmedia.com/t5_3itf3/styles/communityIcon_17n3srnx2ta71.png?width=256&s=581b6101fa8302de0542ba0737d654385e16eda9",
+      symbol: "AVAX/USDT",
+      current_price: "75.23",
+      price_chance_percentage_24h: "2.55",
       positive: false,
     },
   ],
-  USDT: [
+  USDT:[
     {
       id: 1,
-      img: "https://en.bitcoin.it/w/images/en/2/29/BC_Logo_.png",
-      title: "BTC/USDT",
-      lastPrice: "47,575.23",
-      change: "0.32",
+      image: "https://en.bitcoin.it/w/images/en/2/29/BC_Logo_.png",
+      symbol: "BTC/USDT",
+      current_price: "47,575.23",
+      price_chance_percentage_24h: "0.32",
       positive: true,
     },
     {
       id: 2,
-      img: "https://www.pngall.com/wp-content/uploads/10/Ethereum-Logo-PNG-HD-Image.png",
-      title: "ETH/USDT",
-      lastPrice: "7,575.23",
-      change: "2.35",
+      image:
+        "https://www.pngall.com/wp-content/uploads/10/Ethereum-Logo-PNG-HD-Image.png",
+      symbol: "ETH/USDT",
+      current_price: "7,575.23",
+      price_chance_percentage_24h: "2.35",
       positive: true,
     },
     {
       id: 3,
-      img: "https://seeklogo.com/images/S/solana-sol-logo-12828AD23D-seeklogo.com.png",
-      title: "SOL/USDT",
-      lastPrice: "120,25",
-      change: "1.35",
+      image:
+        "https://seeklogo.com/images/S/solana-sol-logo-12828AD23D-seeklogo.com.png",
+      symbol: "SOL/USDT",
+      current_price: "120,25",
+      price_chance_percentage_24h: "1.35",
       positive: false,
     },
     {
       id: 4,
-      img: "https://styles.redditmedia.com/t5_3itf3/styles/communityIcon_17n3srnx2ta71.png?width=256&s=581b6101fa8302de0542ba0737d654385e16eda9",
-      title: "AVAX/USDT",
-      lastPrice: "75.23",
-      change: "2.55",
+      image:
+        "https://styles.redditmedia.com/t5_3itf3/styles/communityIcon_17n3srnx2ta71.png?width=256&s=581b6101fa8302de0542ba0737d654385e16eda9",
+      symbol: "AVAX/USDT",
+      current_price: "75.23",
+      price_chance_percentage_24h: "2.55",
       positive: false,
     },
     {
       id: 5,
-      img: "https://icons.iconarchive.com/icons/cjdowner/cryptocurrency-flat/256/Ripple-XRP-icon.png",
-      title: "XRP/USDT",
-      lastPrice: "5.23",
-      change: "4.55",
+      image:
+        "https://icons.iconarchive.com/icons/cjdowner/cryptocurrency-flat/256/Ripple-XRP-icon.png",
+      symbol: "XRP/USDT",
+      current_price: "5.23",
+      price_chance_percentage_24h: "4.55",
       positive: true,
     },
     {
       id: 5,
-      img: "https://icons.iconarchive.com/icons/cjdowner/cryptocurrency-flat/256/Ripple-XRP-icon.png",
-      title: "XRP/USDT",
-      lastPrice: "5.23",
-      change: "4.55",
+      image:
+        "https://icons.iconarchive.com/icons/cjdowner/cryptocurrency-flat/256/Ripple-XRP-icon.png",
+      symbol: "XRP/USDT",
+      current_price: "5.23",
+      price_chance_percentage_24h: "4.55",
       positive: true,
     },
     {
       id: 5,
-      img: "https://icons.iconarchive.com/icons/cjdowner/cryptocurrency-flat/256/Ripple-XRP-icon.png",
-      title: "XRP/USDT",
-      lastPrice: "5.23",
-      change: "4.55",
+      image:
+        "https://icons.iconarchive.com/icons/cjdowner/cryptocurrency-flat/256/Ripple-XRP-icon.png",
+      symbol: "XRP/USDT",
+      current_price: "5.23",
+      price_chance_percentage_24h: "4.55",
       positive: true,
     },
     {
       id: 5,
-      img: "https://icons.iconarchive.com/icons/cjdowner/cryptocurrency-flat/256/Ripple-XRP-icon.png",
-      title: "XRP/USDT",
-      lastPrice: "5.23",
-      change: "4.55",
+      image:
+        "https://icons.iconarchive.com/icons/cjdowner/cryptocurrency-flat/256/Ripple-XRP-icon.png",
+      symbol: "XRP/USDT",
+      current_price: "5.23",
+      price_chance_percentage_24h: "4.55",
       positive: true,
     },
     {
       id: 5,
-      img: "https://icons.iconarchive.com/icons/cjdowner/cryptocurrency-flat/256/Ripple-XRP-icon.png",
-      title: "XRP/USDT",
-      lastPrice: "5.23",
-      change: "4.55",
+      image:
+        "https://icons.iconarchive.com/icons/cjdowner/cryptocurrency-flat/256/Ripple-XRP-icon.png",
+      symbol: "XRP/USDT",
+      current_price: "5.23",
+      price_chance_percentage_24h: "4.55",
       positive: true,
     },
     {
       id: 5,
-      img: "https://icons.iconarchive.com/icons/cjdowner/cryptocurrency-flat/256/Ripple-XRP-icon.png",
-      title: "XRP/USDT",
-      lastPrice: "5.23",
-      change: "4.55",
+      image:
+        "https://icons.iconarchive.com/icons/cjdowner/cryptocurrency-flat/256/Ripple-XRP-icon.png",
+      symbol: "XRP/USDT",
+      current_price: "5.23",
+      price_chance_percentage_24h: "4.55",
       positive: true,
     },
     {
       id: 5,
-      img: "https://icons.iconarchive.com/icons/cjdowner/cryptocurrency-flat/256/Ripple-XRP-icon.png",
-      title: "XRP/USDT",
-      lastPrice: "5.23",
-      change: "4.55",
+      image:
+        "https://icons.iconarchive.com/icons/cjdowner/cryptocurrency-flat/256/Ripple-XRP-icon.png",
+      symbol: "XRP/USDT",
+      current_price: "5.23",
+      price_chance_percentage_24h: "4.55",
       positive: true,
     },
     {
       id: 5,
-      img: "https://icons.iconarchive.com/icons/cjdowner/cryptocurrency-flat/256/Ripple-XRP-icon.png",
-      title: "XRP/USDT",
-      lastPrice: "5.23",
-      change: "4.55",
+      image:
+        "https://icons.iconarchive.com/icons/cjdowner/cryptocurrency-flat/256/Ripple-XRP-icon.png",
+      symbol: "XRP/USDT",
+      current_price: "5.23",
+      price_chance_percentage_24h: "4.55",
       positive: true,
     },
     {
       id: 5,
-      img: "https://icons.iconarchive.com/icons/cjdowner/cryptocurrency-flat/256/Ripple-XRP-icon.png",
-      title: "XRP/USDT",
-      lastPrice: "5.23",
-      change: "4.55",
+      image:
+        "https://icons.iconarchive.com/icons/cjdowner/cryptocurrency-flat/256/Ripple-XRP-icon.png",
+      symbol: "XRP/USDT",
+      current_price: "5.23",
+      price_chance_percentage_24h: "4.55",
       positive: true,
     },
     {
       id: 5,
-      img: "https://icons.iconarchive.com/icons/cjdowner/cryptocurrency-flat/256/Ripple-XRP-icon.png",
-      title: "XRP/USDT",
-      lastPrice: "5.23",
-      change: "4.55",
+      image:
+        "https://icons.iconarchive.com/icons/cjdowner/cryptocurrency-flat/256/Ripple-XRP-icon.png",
+      symbol: "XRP/USDT",
+      current_price: "5.23",
+      price_chance_percentage_24h: "4.55",
       positive: true,
     },
     {
       id: 5,
-      img: "https://icons.iconarchive.com/icons/cjdowner/cryptocurrency-flat/256/Ripple-XRP-icon.png",
-      title: "XRP/USDT",
-      lastPrice: "5.23",
-      change: "4.55",
+      image:
+        "https://icons.iconarchive.com/icons/cjdowner/cryptocurrency-flat/256/Ripple-XRP-icon.png",
+      symbol: "XRP/USDT",
+      current_price: "5.23",
+      price_chance_percentage_24h: "4.55",
       positive: true,
     },
     {
       id: 5,
-      img: "https://icons.iconarchive.com/icons/cjdowner/cryptocurrency-flat/256/Ripple-XRP-icon.png",
-      title: "XRP/USDT",
-      lastPrice: "5.23",
-      change: "4.55",
+      image:
+        "https://icons.iconarchive.com/icons/cjdowner/cryptocurrency-flat/256/Ripple-XRP-icon.png",
+      symbol: "XRP/USDT",
+      current_price: "5.23",
+      price_chance_percentage_24h: "4.55",
       positive: true,
     },
     {
       id: 5,
-      img: "https://icons.iconarchive.com/icons/cjdowner/cryptocurrency-flat/256/Ripple-XRP-icon.png",
-      title: "XRP/USDT",
-      lastPrice: "5.23",
-      change: "4.55",
+      image:
+        "https://icons.iconarchive.com/icons/cjdowner/cryptocurrency-flat/256/Ripple-XRP-icon.png",
+      symbol: "XRP/USDT",
+      current_price: "5.23",
+      price_chance_percentage_24h: "4.55",
       positive: true,
     },
     {
       id: 5,
-      img: "https://icons.iconarchive.com/icons/cjdowner/cryptocurrency-flat/256/Ripple-XRP-icon.png",
-      title: "XRP/USDT",
-      lastPrice: "5.23",
-      change: "4.55",
+      image:
+        "https://icons.iconarchive.com/icons/cjdowner/cryptocurrency-flat/256/Ripple-XRP-icon.png",
+      symbol: "XRP/USDT",
+      current_price: "5.23",
+      price_chance_percentage_24h: "4.55",
       positive: true,
     },
     {
       id: 5,
-      img: "https://icons.iconarchive.com/icons/cjdowner/cryptocurrency-flat/256/Ripple-XRP-icon.png",
-      title: "XRP/USDT",
-      lastPrice: "5.23",
-      change: "4.55",
+      image:
+        "https://icons.iconarchive.com/icons/cjdowner/cryptocurrency-flat/256/Ripple-XRP-icon.png",
+      symbol: "XRP/USDT",
+      current_price: "5.23",
+      price_chance_percentage_24h: "4.55",
       positive: true,
     },
   ],
-  TRY: [
-      {
+  EUR: [
+    {
       id: 1,
-      img: "https://en.bitcoin.it/w/images/en/2/29/BC_Logo_.png",
-      title: "BTC/TRY",
-      lastPrice: "47,575.23",
-      change: "0.32",
+      image: "https://en.bitcoin.it/w/images/en/2/29/BC_Logo_.png",
+      symbol: "BTC/TRY",
+      current_price: "47,575.23",
+      price_chance_percentage_24h: "0.32",
       positive: true,
     },
     {
       id: 2,
-      img: "https://www.pngall.com/wp-content/uploads/10/Ethereum-Logo-PNG-HD-Image.png",
-      title: "ETH/TRY",
-      lastPrice: "7,575.23",
-      change: "2.35",
+      image:
+        "https://www.pngall.com/wp-content/uploads/10/Ethereum-Logo-PNG-HD-Image.png",
+      symbol: "ETH/TRY",
+      current_price: "7,575.23",
+      price_chance_percentage_24h: "2.35",
       positive: true,
     },
     {
       id: 3,
-      img: "https://seeklogo.com/images/S/solana-sol-logo-12828AD23D-seeklogo.com.png",
-      title: "SOL/TRY",
-      lastPrice: "120,25",
-      change: "1.35",
+      image:
+        "https://seeklogo.com/images/S/solana-sol-logo-12828AD23D-seeklogo.com.png",
+      symbol: "SOL/TRY",
+      current_price: "120,25",
+      price_chance_percentage_24h: "1.35",
       positive: false,
     },
     {
       id: 4,
-      img: "https://styles.redditmedia.com/t5_3itf3/styles/communityIcon_17n3srnx2ta71.png?width=256&s=581b6101fa8302de0542ba0737d654385e16eda9",
-      title: "AVA/TRYX",
-      lastPrice: "75.23",
-      change: "2.55",
+      image:
+        "https://styles.redditmedia.com/t5_3itf3/styles/communityIcon_17n3srnx2ta71.png?width=256&s=581b6101fa8302de0542ba0737d654385e16eda9",
+      symbol: "AVA/TRYX",
+      current_price: "75.23",
+      price_chance_percentage_24h: "2.55",
       positive: false,
     },
     {
       id: 5,
-      img: "https://icons.iconarchive.com/icons/cjdowner/cryptocurrency-flat/256/Ripple-XRP-icon.png",
-      title: "XRP/TRY",
-      lastPrice: "5.23",
-      change: "4.55",
+      image:
+        "https://icons.iconarchive.com/icons/cjdowner/cryptocurrency-flat/256/Ripple-XRP-icon.png",
+      symbol: "XRP/TRY",
+      current_price: "5.23",
+      price_chance_percentage_24h: "4.55",
       positive: true,
     },
     {
       id: 5,
-      img: "https://icons.iconarchive.com/icons/cjdowner/cryptocurrency-flat/256/Ripple-XRP-icon.png",
-      title: "XRP/TRY",
-      lastPrice: "5.23",
-      change: "4.55",
+      image:
+        "https://icons.iconarchive.com/icons/cjdowner/cryptocurrency-flat/256/Ripple-XRP-icon.png",
+      symbol: "XRP/TRY",
+      current_price: "5.23",
+      price_chance_percentage_24h: "4.55",
       positive: true,
     },
     {
       id: 5,
-      img: "https://icons.iconarchive.com/icons/cjdowner/cryptocurrency-flat/256/Ripple-XRP-icon.png",
-      title: "XRP/TRY",
-      lastPrice: "5.23",
-      change: "4.55",
+      image:
+        "https://icons.iconarchive.com/icons/cjdowner/cryptocurrency-flat/256/Ripple-XRP-icon.png",
+      symbol: "XRP/TRY",
+      current_price: "5.23",
+      price_chance_percentage_24h: "4.55",
       positive: true,
     },
     {
       id: 5,
-      img: "https://icons.iconarchive.com/icons/cjdowner/cryptocurrency-flat/256/Ripple-XRP-icon.png",
-      title: "XRP/TRY",
-      lastPrice: "5.23",
-      change: "4.55",
+      image:
+        "https://icons.iconarchive.com/icons/cjdowner/cryptocurrency-flat/256/Ripple-XRP-icon.png",
+      symbol: "XRP/TRY",
+      current_price: "5.23",
+      price_chance_percentage_24h: "4.55",
       positive: true,
     },
     {
       id: 5,
-      img: "https://icons.iconarchive.com/icons/cjdowner/cryptocurrency-flat/256/Ripple-XRP-icon.png",
-      title: "XRP/TRY",
-      lastPrice: "5.23",
-      change: "4.55",
+      image:
+        "https://icons.iconarchive.com/icons/cjdowner/cryptocurrency-flat/256/Ripple-XRP-icon.png",
+      symbol: "XRP/TRY",
+      current_price: "5.23",
+      price_chance_percentage_24h: "4.55",
       positive: true,
     },
     {
       id: 5,
-      img: "https://icons.iconarchive.com/icons/cjdowner/cryptocurrency-flat/256/Ripple-XRP-icon.png",
-      title: "XRP/TRY",
-      lastPrice: "5.23",
-      change: "4.55",
+      image:
+        "https://icons.iconarchive.com/icons/cjdowner/cryptocurrency-flat/256/Ripple-XRP-icon.png",
+      symbol: "XRP/TRY",
+      current_price: "5.23",
+      price_chance_percentage_24h: "4.55",
       positive: true,
     },
     {
       id: 5,
-      img: "https://icons.iconarchive.com/icons/cjdowner/cryptocurrency-flat/256/Ripple-XRP-icon.png",
-      title: "XRP/TRY",
-      lastPrice: "5.23",
-      change: "4.55",
+      image:
+        "https://icons.iconarchive.com/icons/cjdowner/cryptocurrency-flat/256/Ripple-XRP-icon.png",
+      symbol: "XRP/TRY",
+      current_price: "5.23",
+      price_chance_percentage_24h: "4.55",
       positive: true,
     },
     {
       id: 5,
-      img: "https://icons.iconarchive.com/icons/cjdowner/cryptocurrency-flat/256/Ripple-XRP-icon.png",
-      title: "XRP/TRY",
-      lastPrice: "5.23",
-      change: "4.55",
+      image:
+        "https://icons.iconarchive.com/icons/cjdowner/cryptocurrency-flat/256/Ripple-XRP-icon.png",
+      symbol: "XRP/TRY",
+      current_price: "5.23",
+      price_chance_percentage_24h: "4.55",
       positive: true,
     },
     {
       id: 5,
-      img: "https://icons.iconarchive.com/icons/cjdowner/cryptocurrency-flat/256/Ripple-XRP-icon.png",
-      title: "XRP/TRY",
-      lastPrice: "5.23",
-      change: "4.55",
+      image:
+        "https://icons.iconarchive.com/icons/cjdowner/cryptocurrency-flat/256/Ripple-XRP-icon.png",
+      symbol: "XRP/TRY",
+      current_price: "5.23",
+      price_chance_percentage_24h: "4.55",
       positive: true,
     },
     {
       id: 5,
-      img: "https://icons.iconarchive.com/icons/cjdowner/cryptocurrency-flat/256/Ripple-XRP-icon.png",
-      title: "XRP/TRY",
-      lastPrice: "5.23",
-      change: "4.55",
+      image:
+        "https://icons.iconarchive.com/icons/cjdowner/cryptocurrency-flat/256/Ripple-XRP-icon.png",
+      symbol: "XRP/TRY",
+      current_price: "5.23",
+      price_chance_percentage_24h: "4.55",
       positive: true,
     },
     {
       id: 5,
-      img: "https://icons.iconarchive.com/icons/cjdowner/cryptocurrency-flat/256/Ripple-XRP-icon.png",
-      title: "XRP/TRY",
-      lastPrice: "5.23",
-      change: "4.55",
+      image:
+        "https://icons.iconarchive.com/icons/cjdowner/cryptocurrency-flat/256/Ripple-XRP-icon.png",
+      symbol: "XRP/TRY",
+      current_price: "5.23",
+      price_chance_percentage_24h: "4.55",
       positive: true,
     },
     {
       id: 5,
-      img: "https://icons.iconarchive.com/icons/cjdowner/cryptocurrency-flat/256/Ripple-XRP-icon.png",
-      title: "XRP/TRY",
-      lastPrice: "5.23",
-      change: "4.55",
+      image:
+        "https://icons.iconarchive.com/icons/cjdowner/cryptocurrency-flat/256/Ripple-XRP-icon.png",
+      symbol: "XRP/TRY",
+      current_price: "5.23",
+      price_chance_percentage_24h: "4.55",
       positive: true,
     },
     {
       id: 5,
-      img: "https://icons.iconarchive.com/icons/cjdowner/cryptocurrency-flat/256/Ripple-XRP-icon.png",
-      title: "XRP/TRY",
-      lastPrice: "5.23",
-      change: "4.55",
+      image:
+        "https://icons.iconarchive.com/icons/cjdowner/cryptocurrency-flat/256/Ripple-XRP-icon.png",
+      symbol: "XRP/TRY",
+      current_price: "5.23",
+      price_chance_percentage_24h: "4.55",
       positive: true,
     },
     {
       id: 5,
-      img: "https://icons.iconarchive.com/icons/cjdowner/cryptocurrency-flat/256/Ripple-XRP-icon.png",
-      title: "XRP/TRY",
-      lastPrice: "5.23",
-      change: "4.55",
+      image:
+        "https://icons.iconarchive.com/icons/cjdowner/cryptocurrency-flat/256/Ripple-XRP-icon.png",
+      symbol: "XRP/TRY",
+      current_price: "5.23",
+      price_chance_percentage_24h: "4.55",
       positive: true,
     },
     {
       id: 5,
-      img: "https://icons.iconarchive.com/icons/cjdowner/cryptocurrency-flat/256/Ripple-XRP-icon.png",
-      title: "XRP/TRY",
-      lastPrice: "5.23",
-      change: "4.55",
+      image:
+        "https://icons.iconarchive.com/icons/cjdowner/cryptocurrency-flat/256/Ripple-XRP-icon.png",
+      symbol: "XRP/TRY",
+      current_price: "5.23",
+      price_chance_percentage_24h: "4.55",
       positive: true,
     },
   ],
 });
+
+watch(
+  () => USDCoinStore.getUSDCoins,
+  () => {
+    categories.value.USDT = USDCoinStore.getUSDCoins;
+  }
+);
+
+watch(
+  () => EURCoinStore.getEURCoins,
+  () => {
+    categories.value.EUR = EURCoinStore.getEURCoins;
+    categories.value.FAV = EURCoinStore.getEURCoins;
+  }
+);
+
 </script>

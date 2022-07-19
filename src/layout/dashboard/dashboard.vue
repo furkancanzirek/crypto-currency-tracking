@@ -229,7 +229,6 @@
           </button>
         </div>
       </div>
-
       <div
         class="
           leftNavbar
@@ -245,7 +244,18 @@
       >
         <menuItems />
       </div>
-      <div class="content translate-x-16 translate-y-28 right-0 z-[1] h-full text-black top-28 px-2">
+      <div
+        class="
+          content
+          translate-x-16 translate-y-28
+          right-0
+          z-[1]
+          h-full
+          text-black
+          top-28
+          px-2
+        "
+      >
         <router-view></router-view>
       </div>
     </div>
@@ -255,7 +265,7 @@
 
 
 <script setup>
-import { provide, ref, onMounted, computed } from "vue";
+import { provide, ref, onMounted, computed, watch } from "vue";
 import menuItems from "../menuItems/menuItems.vue";
 import messages from "../../features/layout/messages.vue";
 import notifications from "../../features/layout/notifications.vue";
@@ -268,13 +278,17 @@ import {
   MoonIcon,
   SearchIcon,
 } from "@heroicons/vue/solid";
-
+import { getAllCryptoDetailsUSD,getAllCryptoDetailsEUR } from "../../services/cryptoService";
+import {useSelectedCoinStore,useUSDCoinStore,useEURCoinStore} from "../../store/coin/coin.store"
 const mode = useColorMode();
 const darkMode = ref(mode.value == "light" ? false : true);
 const stateOfMenu = ref(true);
 const stateOfMessages = ref(false);
 const stateOfNotifications = ref(false);
 const stateOfSearchBar = ref(false);
+const selectedCoinStore=useSelectedCoinStore()
+const USDCoinStore=useUSDCoinStore();
+const EURCoinStore=useEURCoinStore();
 const changeThemeMode = () => {
   console.log("asdasdasd");
   mode.value = mode.value == "light" ? "dark" : "light";
@@ -290,35 +304,28 @@ const handleSearchBar = () => {
   console.log(handleSearchBar.value);
   stateOfSearchBar.value = !stateOfSearchBar.value;
 };
-const coin = [
-  "BTC/USDT",
-  "ETH/USDT",
-  "SOL/USDT",
-  "AVAX/USDT",
-  "XRP1/USDT",
-  "BTC2/USDT",
-  "ETH2/USDT",
-  "SOL3/USDT",
-  "AVA3X/USDT",
-  "XR1P/USDT",
-  "BT3C/USDT",
-  "ET3H/USDT",
-  "SO4L/USDT",
-  "AV5AX/USDT",
-  "XR5P/USDT",
-];
-const selectedCoin = ref("");
-const filteredCoin = computed(() =>
-  selectedCoin.value === ""
-    ? coin
-    : coin.filter((coin) => {
-        return coin.toLowerCase().includes(selectedCoin.value.toLowerCase());
-      })
-);
+const selectedCoin=ref({})
+const changeBigGraph=()=>{
+
+}
+const allCryptoDatasUSD = ref([]);
+const allCryptoDatasEUR = ref([]);
+const getCryptoDatas = async () => {
+  allCryptoDatasUSD.value = await getAllCryptoDetailsUSD();
+  USDCoinStore.setUSDCoins(await getAllCryptoDetailsUSD())
+  EURCoinStore.setEURCoins(await getAllCryptoDetailsEUR())
+  allCryptoDatasEUR.value = await getAllCryptoDetailsEUR();
+};
+
+const cryptoSelectorData=ref([]);
 provide("stateOfMessages", stateOfMessages);
 provide("stateOfMenu", stateOfMenu);
+provide("allCryptoDatasUSD", allCryptoDatasUSD)
+provide("allCryptoDatasEUR", allCryptoDatasEUR)
+
 onMounted(() => {
   console.log(darkMode.value);
+  getCryptoDatas();
 });
 </script>
 <style lang="scss">
