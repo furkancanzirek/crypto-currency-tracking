@@ -20,6 +20,7 @@
     "firebase": "^9.9.1",
     "pinia": "^2.0.16",
     "roboto-fontface": "*",
+    "sweetalert2": "^11.4.24",
     "swiper": "^8.2.4",
     "vue": "^3.2.25",
     "vue-router": "^4.0.15",

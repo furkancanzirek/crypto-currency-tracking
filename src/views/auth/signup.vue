@@ -168,7 +168,7 @@
             >
               <i class="ri-login-box-line text-lg"></i>
 
-              <span class="ml-3"> Login</span>
+              <span class="ml-3 " @click="()=>{router.push('/')}"> Login</span>
             </button>
             <p class="mt-6 text-xs text-gray-600 text-center">
               I agree to abide by QuickCrypto's
@@ -196,19 +196,45 @@
 </template>
 
 <script setup>
-import {getAuth,createUserWithEmailAndPassword} from "firebase/auth"
+import { getAuth, createUserWithEmailAndPassword } from "firebase/auth";
 import { ref } from "vue";
+import { useRouter, useRoute } from "vue-router";
+import Swal from "sweetalert2";
+const Toast = Swal.mixin({
+  toast: true,
+  position: "top-end",
+  showConfirmButton: false,
+  timer: 3000,
+  timerProgressBar: true,
+  didOpen: (toast) => {
+    toast.addEventListener("mouseenter", Swal.stopTimer);
+    toast.addEventListener("mouseleave", Swal.resumeTimer);
+  },
+});
 
-const email=ref("")
-const password=ref("")
-const register=()=>{
-createUserWithEmailAndPassword(getAuth(),email.value,password.value).then((data)=>{
-    console.log("successfully registered");
-}).catch((error)=>{
-    console.log(error);
-})
-}
-const signInWithGoogle =()=>{
-
-}
+const email = ref("");
+const password = ref("");
+const router = useRouter();
+const errMsg=ref()
+const register = () => {
+  createUserWithEmailAndPassword(getAuth(), email.value, password.value)
+    .then((data) => {
+      console.log("successfully registered");
+      Toast.fire({
+        icon: "success",
+        title: "Successfully registered",
+      });
+      const auth = getAuth();
+      console.log(auth.currentUser);
+      router.push("/");
+    })
+    .catch((error) => {
+      console.log(error);
+      Tost.fire({
+        icon:"error",
+        title:errMsg.value
+      })
+    });
+};
+const signInWithGoogle = () => {};
 </script>

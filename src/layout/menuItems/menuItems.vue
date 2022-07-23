@@ -138,6 +138,7 @@
         :class="{
           close: stateOfMenu,
         }"
+        @click="logOut"
       >
         <i
           class="ri-logout-box-r-fill text-xl ml-5"
@@ -152,7 +153,10 @@
 </template>
 <script setup>
 import menuItemList from "./menuItemList";
-import { ref, inject } from "vue";
+import { ref, inject, onMounted } from "vue";
+import { signOut, getAuth } from "firebase/auth";
+import { useRouter, useRoute } from "vue-router";
+const router = useRouter();
 const stateOfMenu = inject("stateOfMenu");
 const menuItems = ref(menuItemList);
 const changeMenuValue = (menuItemId) => {
@@ -166,7 +170,18 @@ const changeMenuValue = (menuItemId) => {
     console.log(menuItem.active);
   });
 };
-
+let auth;
+onMounted(() => {
+  auth = getAuth();
+});
+const logOut = () => {
+  console.log("çıkış");
+  signOut(auth).then(() => {
+    router.push("/");
+    localStorage.removeItem("userData");
+    localStorage.removeItem("authKey");
+  });
+};
 const handleMenu = () => {
   console.log("asdfasdf");
   stateOfMenu.value = !stateOfMenu.value;

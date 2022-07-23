@@ -65,8 +65,6 @@
               </div>
               <span class="ml-4"> Login with Google </span>
             </button>
-
-            
           </div>
 
           <div class="my-12 border-b text-center">
@@ -103,6 +101,7 @@
               "
               type="email"
               placeholder="Email"
+              v-model="email"
             />
             <input
               class="
@@ -120,6 +119,7 @@
               "
               type="password"
               placeholder="Password"
+              v-model="password"
             />
             <button
               class="
@@ -129,7 +129,32 @@
                 bg-indigo-500
                 text-gray-100
                 w-full
-                py-4
+                py-2
+                rounded-lg
+                hover:bg-indigo-700
+                transition-all
+                duration-300
+                ease-in-out
+                flex
+                items-center
+                justify-center
+                focus:shadow-outline focus:outline-none
+              "
+              @click="login"
+            >
+              <i class="ri-user-add-line text-lg"></i>
+
+              <span class="ml-3"> Login </span>
+            </button>
+            <button
+              class="
+                mt-5
+                tracking-wide
+                font-semibold
+                bg-indigo-500
+                text-gray-100
+                w-full
+                py-2
                 rounded-lg
                 hover:bg-indigo-700
                 transition-all
@@ -141,8 +166,18 @@
                 focus:shadow-outline focus:outline-none
               "
             >
-               <i class="ri-login-box-line text-lg"></i>
-              <span class="ml-3"> Login </span>
+              <i class="ri-login-box-line text-lg"></i>
+
+              <span
+                class="ml-3"
+                @click="
+                  () => {
+                    router.push('signup');
+                  }
+                "
+              >
+                Sign up</span
+              >
             </button>
             <p class="mt-6 text-xs text-gray-600 text-center">
               I agree to abide by QuickCrypto's
@@ -168,3 +203,49 @@
     </div>
   </div>
 </template>
+<script setup>
+import { getAuth, signInWithEmailAndPassword } from "firebase/auth";
+import { ref } from "vue";
+import { useRouter, useRoute } from "vue-router";
+import Swal from "sweetalert2";
+const Toast = Swal.mixin({
+  toast: true,
+  position: "top-end",
+  showConfirmButton: false,
+  timer: 3000,
+  timerProgressBar: true,
+  didOpen: (toast) => {
+    toast.addEventListener("mouseenter", Swal.stopTimer);
+    toast.addEventListener("mouseleave", Swal.resumeTimer);
+  },
+});
+
+const email = ref("");
+const password = ref("");
+const router = useRouter();
+
+const login = () => {
+  console.log("giriş deneniyor");
+  signInWithEmailAndPassword(getAuth(), email.value, password.value)
+    .then((data) => {
+      console.log("successfully sign In");
+      Toast.fire({
+        icon: "success",
+        title: "Signed in successfully",
+      });
+      const auth = getAuth();
+      console.log(auth.currentUser);
+      localStorage.setItem("authKey", auth.currentUser.accessToken);
+      localStorage.setItem(
+        "userData",
+        JSON.stringify(auth.currentUser.providerData[0])
+      );
+      router.push("dashboard");
+      console.log("sadfsdf");
+    })
+    .catch((error) => {
+      console.log(error);
+    });
+};
+const signInWithGoogle = () => {};
+</script>
