@@ -165,16 +165,17 @@
                 justify-center
                 focus:shadow-outline focus:outline-none
               "
+               @click="
+                  () => {
+                    router.push('signup');
+                  }
+                "
             >
               <i class="ri-login-box-line text-lg"></i>
 
               <span
                 class="ml-3"
-                @click="
-                  () => {
-                    router.push('signup');
-                  }
-                "
+               
               >
                 Sign up</span
               >
