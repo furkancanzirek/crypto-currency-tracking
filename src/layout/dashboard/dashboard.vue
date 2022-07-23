@@ -264,7 +264,7 @@
           right-0
           z-[1]
           w-screen
-          sm:w-[95%]
+          sm:w-[96%]
           sm:h-full
           text-black
           top-28

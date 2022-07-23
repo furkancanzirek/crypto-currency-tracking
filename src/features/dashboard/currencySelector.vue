@@ -64,7 +64,7 @@
                   <td class="p-5 font-medium flex">
                     <i
                       v-if="post.market_cap_change_percentage_24h > 0"
-                      class="ri-arrow-up-s-fill ml-1 font-bold text-[#00B786]"
+                      class="ri-arrow-up-s-fill ml-1 font-bold text-[#1C668F]"
                     ></i>
                     <i
                       v-else
