@@ -101,6 +101,7 @@
               "
               type="email"
               placeholder="Email"
+              v-model="email"
             />
             <input
               class="
@@ -118,6 +119,7 @@
               "
               type="password"
               placeholder="Password"
+              v-model="password"
             />
             <button
               class="
@@ -127,7 +129,7 @@
                 bg-indigo-500
                 text-gray-100
                 w-full
-                py-4
+                py-2
                 rounded-lg
                 hover:bg-indigo-700
                 transition-all
@@ -138,8 +140,9 @@
                 justify-center
                 focus:shadow-outline focus:outline-none
               "
+              @click="register"
             >
-             <i class="ri-user-add-line text-lg"></i>
+              <i class="ri-user-add-line text-lg"></i>
 
               <span class="ml-3"> Sign Up </span>
             </button>
@@ -151,7 +154,7 @@
                 bg-indigo-500
                 text-gray-100
                 w-full
-                py-4
+                py-2
                 rounded-lg
                 hover:bg-indigo-700
                 transition-all
@@ -191,3 +194,21 @@
     </div>
   </div>
 </template>
+
+<script setup>
+import {getAuth,createUserWithEmailAndPassword} from "firebase/auth"
+import { ref } from "vue";
+
+const email=ref("")
+const password=ref("")
+const register=()=>{
+createUserWithEmailAndPassword(getAuth(),email.value,password.value).then((data)=>{
+    console.log("successfully registered");
+}).catch((error)=>{
+    console.log(error);
+})
+}
+const signInWithGoogle =()=>{
+
+}
+</script>

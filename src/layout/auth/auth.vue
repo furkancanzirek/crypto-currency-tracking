@@ -6,7 +6,7 @@
   <div
     class="
       authContainer
-      min-h-screen
+      h-screen
       bg-gray-100
       text-gray-900
       flex

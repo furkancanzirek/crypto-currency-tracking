@@ -3,7 +3,7 @@ import signup from "@/views/auth/signup.vue";
 export default [
   {
     name: "auth",
-    path: "/",
+    path: "/auth",
     components: {
       default: () => import("@/layout/auth/auth.vue"),
     },
