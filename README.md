@@ -10,7 +10,7 @@
    Track your cryptocurrencies easily and quickly!
     <br />
     <br />
-    <a href="https://crypto-currency-tracking-f9r3vt2na-furkancanzirek.vercel.app">View Demo</a>
+    <a href="https://crypto-currency-tracking-app.vercel.app/">View Demo</a>
     ·
     <a href="https://github.com/furkancanzirek/crypto-currency-tracking/issues">Report Bug</a>
     ·
