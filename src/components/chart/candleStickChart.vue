@@ -325,7 +325,7 @@ const chartOptions = ref({
     sparkline: {
       enabled: false,
     },
-    foreColor: '#29A5E9',
+    foreColor: '#2893CC',
     type: "candlestick",
 
     toolbar: {
