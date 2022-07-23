@@ -230,7 +230,7 @@ const register = () => {
     })
     .catch((error) => {
       console.log(error);
-      Tost.fire({
+      Toast.fire({
         icon:"error",
         title:errMsg.value
       })
