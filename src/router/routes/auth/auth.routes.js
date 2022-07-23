@@ -9,11 +9,11 @@ export default [
     },
     children: [
       {
-        path: "/login",
+        path: "login",
         component: login,
       },
       {
-        path: "/signup",
+        path: "signup",
         component: signup,
       },
     ],
