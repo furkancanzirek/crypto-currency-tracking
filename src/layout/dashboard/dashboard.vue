@@ -264,8 +264,7 @@
           right-0
           z-[1]
           w-screen
-          sm:w-[96%]
-          sm:h-full
+          sm:w-[96%] sm:h-full
           text-black
           top-28
           px-2
@@ -347,9 +346,9 @@ const allCryptoDatasUSD = ref([]);
 const allCryptoDatasEUR = ref([]);
 const getCryptoDatas = async () => {
   allCryptoDatasUSD.value = await getAllCryptoDetailsUSD();
-  USDCoinStore.setUSDCoins(await getAllCryptoDetailsUSD());
-  EURCoinStore.setEURCoins(await getAllCryptoDetailsEUR());
   allCryptoDatasEUR.value = await getAllCryptoDetailsEUR();
+  USDCoinStore.setUSDCoins(allCryptoDatasUSD.value);
+  EURCoinStore.setEURCoins(allCryptoDatasEUR.value);
 };
 
 const cryptoSelectorData = ref([]);
@@ -387,7 +386,6 @@ onMounted(() => {
 }
 .content {
   min-height: calc(100% - 105px);
-
 }
 .boxShadow {
   box-shadow: rgba(50, 50, 93, 0.25) 0px 30px 60px -12px,
