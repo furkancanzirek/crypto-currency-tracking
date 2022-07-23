@@ -5,9 +5,9 @@
     <bigGraph />
     <currencySelector />
   </div>
-  <div class="marketingValues grid grid-col-2 mt-5 h-2/6">
+  <!-- <div class="marketingValues grid grid-col-2 mt-5 h-2/6">
     <marketingValues />
-  </div>
+  </div> -->
 </template>
 <script setup>
 import smallSliderGraph from "../../features/dashboard/smallSliderGraph.vue";

@@ -2,7 +2,7 @@
   <div class="currencySelect w-screen sm:w-full col-span-2 lg:col-span-3 p-5">
     <div class="w-full h-full">
       <TabGroup>
-        <TabList class="flex space-x-1 rounded-xl bg-blue-900/20 p-1">
+        <TabList class="flex space-x-1 rounded-xl bg-blue-900/10 p-1">
           <Tab
             v-for="category in Object.keys(categories)"
             as="template"
@@ -11,11 +11,13 @@
           >
             <button
               :class="[
-                'w-full rounded-lg  py-2.5 text-sm font-medium leading-5 text-white',
+                'w-full rounded-lg  py-2.5 text-sm font-medium leading-5 text-black dark:text-white ',
                 'ring-white ring-opacity-60 ring-offset-2 ring-offset-blue-400 focus:outline-none focus:ring-2',
-                selected
+                darkMode && selected
                   ? 'bg-[#e36d85] shadow'
-                  : 'bg-black text-blue-100 hover:bg-white/[0.12] hover:text-white',
+                  : !darkMode && selected
+                  ? 'bg-white text-[#e36d85] hover:text-[#e36d85]'
+                  : '',
               ]"
             >
               {{ category }}
@@ -27,11 +29,11 @@
           <TabPanel
             v-for="(posts, idx) in Object.values(categories)"
             :key="idx"
-            :class="['rounded-xl bg-black p-3', ,]"
+            class="rounded-xl dark:bg-black p-3 bg-white"
           >
-            <table class="table-auto text-white">
+            <table class="table-auto dark:text-white text-black">
               <thead>
-                <tr class="border-b-[0.1rem] border-b-gray-700">
+                <tr class="dark:border-b-[0.1rem] dark:border-b-gray-700">
                   <th class="p-3 w-8">#</th>
                   <th class="p-3 w-8">Tokens</th>
                   <th class="p-3 w-1/2">Last Price</th>
@@ -43,7 +45,7 @@
                   v-for="post in posts"
                   :key="post.id"
                   class="
-                    border-b-[0.1rem] border-b-gray-800
+                    dark:border-b-[0.1rem] dark:border-b-gray-800
                     cursor-pointer
                     hover:bg-gray-100 hover:text-black
                     p-5
@@ -116,6 +118,7 @@ const handleSelectedCoin = (coin) => {
   selectedCoinStore.setSelectedCoin(coin);
   console.log("merhaba");
 };
+const darkMode = inject("darkMode");
 const categories = ref({
   FAV: [
     {

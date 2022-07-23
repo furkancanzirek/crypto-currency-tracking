@@ -312,10 +312,10 @@ const selectedCoinStore = useSelectedCoinStore();
 const USDCoinStore = useUSDCoinStore();
 const EURCoinStore = useEURCoinStore();
 const changeThemeMode = () => {
-  console.log("asdasdasd");
   mode.value = mode.value == "light" ? "dark" : "light";
   darkMode.value = !darkMode.value;
 };
+
 const handleMessages = () => {
   stateOfMessages.value = !stateOfMessages.value;
 };
@@ -357,7 +357,7 @@ provide("stateOfMessages", stateOfMessages);
 provide("stateOfMenu", stateOfMenu);
 provide("allCryptoDatasUSD", allCryptoDatasUSD);
 provide("allCryptoDatasEUR", allCryptoDatasEUR);
-
+provide("darkMode", darkMode);
 onMounted(() => {
   console.log(darkMode.value);
   getCryptoDatas();

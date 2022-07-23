@@ -12,17 +12,19 @@
 
 <script setup>
 import VueApexCharts from "vue3-apexcharts";
-import { ref, watch } from "vue";
+import { ref, watch, inject } from "vue";
 import { useSelectedCoinStore } from "../../store/coin/coin.store";
+
 const selectedCoinStore = useSelectedCoinStore();
 const series = ref("");
+const darkMode = inject("darkMode");
 watch(
   () => selectedCoinStore.selectedCoin,
   () => {
     const coinPrices = selectedCoinStore.selectedCoin.sparkline_in_7d.price;
     const filteredList = ref([]);
     coinPrices.map((price, idx) => {
-      if (price>100) {
+      if (price > 100) {
         filteredList.value.push({
           x: new Date(new Date().getTime() - (24 * 60 * 60 * 1000 * idx) / 24),
           y: [
@@ -38,9 +40,9 @@ watch(
           x: new Date(new Date().getTime() - (24 * 60 * 60 * 1000 * idx) / 24),
           y: [
             price,
-            price+(price/100) ,
-            price ,
-            price+Math.floor(Math.random() * price/50) -price/100,
+            price + price / 100,
+            price,
+            price + Math.floor((Math.random() * price) / 50) - price / 100,
           ],
         });
       }
@@ -323,6 +325,7 @@ const chartOptions = ref({
     sparkline: {
       enabled: false,
     },
+    foreColor: '#29A5E9',
     type: "candlestick",
 
     toolbar: {
@@ -350,13 +353,15 @@ const chartOptions = ref({
     },
   },
 });
+
+
 </script>
 
 <style lang="scss">
 .apexcharts-text.apexcharts-yaxis-label,
 .apexcharts-text.apexcharts-xaxis-label {
-  fill: white;
-  opacity: 0.7 !important;
+  font-weight: 600
+  
 }
 .apexcharts-gridline {
   opacity: 0.4 !important;
