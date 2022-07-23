@@ -1,5 +1,5 @@
 <template>
-  <div class="currencySelect col-span-2 lg:col-span-3 p-5">
+  <div class="currencySelect w-screen sm:w-full col-span-2 lg:col-span-3 p-5">
     <div class="w-full h-full">
       <TabGroup>
         <TabList class="flex space-x-1 rounded-xl bg-blue-900/20 p-1">

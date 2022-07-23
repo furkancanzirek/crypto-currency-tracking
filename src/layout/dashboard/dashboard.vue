@@ -248,6 +248,8 @@
           fixed
           top-[5.4rem]
           sm:top-[6.5rem]
+          hidden
+          sm:inline
           z-40
           h-screen
         "
@@ -257,10 +259,13 @@
       <div
         class="
           content
-          translate-x-16 translate-y-28
+          sm:translate-x-16
+          translate-y-28
           right-0
           z-[1]
-          h-full
+          w-screen
+          sm:w-[95%]
+          sm:h-full
           text-black
           top-28
           px-2
@@ -382,7 +387,7 @@ onMounted(() => {
 }
 .content {
   min-height: calc(100% - 105px);
-  width: calc(100vw - 100px);
+
 }
 .boxShadow {
   box-shadow: rgba(50, 50, 93, 0.25) 0px 30px 60px -12px,

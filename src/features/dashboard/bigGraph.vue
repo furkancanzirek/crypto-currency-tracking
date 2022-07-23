@@ -1,10 +1,10 @@
 <template>
-  <div class="currencyBigGraph col-span-2 lg:col-span-9 p-3 sm:p-5">
+  <div class="currencyBigGraph w-screen sm:w-full col-span-2 lg:col-span-9 p-3 sm:p-5">
     <div class="extraInformation flex justify-between flex-col sm:flex-row">
       <h1 class="text-white font-semibold text-2xl xl:translate-x-[4.5rem] translate-x-0">
         BTC/USDT - 1 Week
       </h1>
-      <div class="values flex">
+      <div class="values text-[13px] sm:text-[16px] flex">
         <div class="o text-white mx-2">
           O<span class="text-[#E36D85] ml-1">42373.73 </span>
         </div>
@@ -25,7 +25,7 @@
         </div>
       </div>
     </div>
-    <div class="graph w-full">
+    <div class="graph w-full sm:w-full">
       <candleStickChartVue  />
     </div>
   </div>
