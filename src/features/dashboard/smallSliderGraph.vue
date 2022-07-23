@@ -17,8 +17,9 @@
       lg:gap-4
     "
   >
-    <swiper-slide class="bg-green-50" :key="graph" v-for="graph in 12"
+    <swiper-slide class="bg-green-50" :key="coin" v-for="coin in coins"
       ><smallSliderGraph class="w-full"
+      :coin="coin"
     /></swiper-slide>
   </swiper>
 </template>
@@ -27,7 +28,11 @@
 <script setup>
 import smallSliderGraph from "@/components/dashboard/smallSliderGraph/smallSliderGraph.vue";
 import { Swiper, SwiperSlide } from "swiper/vue";
-import { ref, onMounted } from "vue";
+import { ref, onMounted ,watch} from "vue";
+import {
+  useUSDCoinStore,
+} from "../../store/coin/coin.store";
+
 // Import Swiper styles
 import "swiper/css";
 import "swiper/css/pagination";
@@ -35,6 +40,9 @@ import "swiper/css/navigation";
 import "./style.css";
 // import required modules
 import { Pagination, Navigation } from "swiper";
+
+const USDCoinStore=useUSDCoinStore()
+const coins=ref([])
 
 const swiperJSBreakpoint = ref(4);
 const setBreakpointFromResulation = () => {
@@ -53,7 +61,12 @@ const setBreakpointFromResulation = () => {
 
 onMounted(() => {
   setBreakpointFromResulation();
+  
 });
+watch(()=>USDCoinStore.getUSDCoins,()=>{
+  coins.value=USDCoinStore.getUSDCoins
+  coins.value=coins.value.splice(0,10)
+})
 window.addEventListener("resize", setBreakpointFromResulation);
 </script>
 

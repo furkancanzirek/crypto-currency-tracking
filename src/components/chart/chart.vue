@@ -5,14 +5,15 @@
       height="110"
       type="area"
       :options="chartOptions"
-      :series="props.series"
+      :series="series ? series : props.series"
     ></VueApexCharts>
   </div>
 </template>
 
 <script setup>
 import VueApexCharts from "vue3-apexcharts";
-import { ref } from "vue";
+import { onMounted, ref, watch } from "vue";
+const xAxis = [];
 const props = defineProps({
   series: {
     type: Array,
@@ -35,6 +36,7 @@ const props = defineProps({
     type: String,
     default: "Area",
   },
+  coin: Object,
 });
 const chartOptions = ref({
   chart: {
@@ -81,13 +83,28 @@ const chartOptions = ref({
     },
   },
   xaxis: {
-    categories: props.xAxis,
+    categories: xAxis?xAxis:props.xAxis,
   },
 });
-const series = ref([
+const series = [
   {
-    name: "BTC",
-    data: [30, 40, 35, 50, 49, 60, 70, 91],
+    name: "Coin",
+    data: [],
   },
-]);
+];
+
+onMounted(() => {
+  let dateCounter=6
+  props.coin.sparkline_in_7d.price.map((price, idx) => {
+    if ((idx + 1) % 24 == 0 || idx == 0) {
+      series[0].data.push(price.toFixed(5));
+        xAxis.push(new Date().getDate()-dateCounter);
+        dateCounter--
+    }
+  });
+  console.log(series);
+  console.log(props.series);
+
+
+});
 </script>

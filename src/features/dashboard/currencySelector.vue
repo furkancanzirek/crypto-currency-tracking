@@ -61,8 +61,16 @@
                     {{ post.symbol }}
                   </td>
                   <td class="p-5 font-medium">{{ post.current_price }}</td>
-                  <td class="p-5 font-medium">
-                    {{ post.price_change_percentage_24h }}
+                  <td class="p-5 font-medium flex">
+                    <i
+                      v-if="post.market_cap_change_percentage_24h > 0"
+                      class="ri-arrow-up-s-fill ml-1 font-bold text-[#00B786]"
+                    ></i>
+                    <i
+                      v-else
+                      class="ri-arrow-down-s-fill ml-1 font-bold text-[red]"
+                    ></i>
+                    {{ post.price_change_percentage_24h }}%
                   </td>
                 </tr>
               </tbody>
@@ -104,10 +112,10 @@ import {
 const USDCoinStore = useUSDCoinStore();
 const EURCoinStore = useEURCoinStore();
 const selectedCoinStore = useSelectedCoinStore();
-const handleSelectedCoin=(coin)=>{
-  selectedCoinStore.setSelectedCoin(coin)
-console.log("merhaba");
-}
+const handleSelectedCoin = (coin) => {
+  selectedCoinStore.setSelectedCoin(coin);
+  console.log("merhaba");
+};
 const categories = ref({
   FAV: [
     {
@@ -173,7 +181,7 @@ const categories = ref({
       positive: false,
     },
   ],
-  USDT:[
+  USDT: [
     {
       id: 1,
       image: "https://en.bitcoin.it/w/images/en/2/29/BC_Logo_.png",
@@ -533,5 +541,4 @@ watch(
     categories.value.FAV = EURCoinStore.getEURCoins;
   }
 );
-
 </script>
