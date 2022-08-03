@@ -358,7 +358,7 @@ provide("allCryptoDatasUSD", allCryptoDatasUSD);
 provide("allCryptoDatasEUR", allCryptoDatasEUR);
 provide("darkMode", darkMode);
 onMounted(() => {
-console.log(userData);
+
   getCryptoDatas();
 });
 </script>

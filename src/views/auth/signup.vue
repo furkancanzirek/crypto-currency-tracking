@@ -245,7 +245,7 @@ const signInWithGoogle = () => {
         icon: "success",
         title: "Signed in successfully",
       });
-    console.log(result.user);
+
     localStorage.setItem("authKey", result.user.accessToken);
       localStorage.setItem(
         "userData",
@@ -253,7 +253,7 @@ const signInWithGoogle = () => {
       );
       router.push("dashboard");
   }).catch((error) => {
-    console.log(error);
+
   })
 };
 </script>

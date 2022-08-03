@@ -246,7 +246,7 @@ const login = (e) => {
       router.push("dashboard");
     })
     .catch((error) => {
-      console.log(error.code);
+   
       switch (error.code) {
         case "auth/invalid-email":
           errMsg.value = "Invalid Email";
@@ -271,7 +271,7 @@ const signInWithGoogle = () => {
   const provider =new GoogleAuthProvider(getAuth());
   signInWithPopup(getAuth(), provider)
   .then((result)=>{
-    console.log(result.user);
+
     Toast.fire({
         icon: "success",
         title: "Signed in successfully",
@@ -283,7 +283,7 @@ const signInWithGoogle = () => {
       );
       router.push("dashboard");
   }).catch((error) => {
-    console.log(error);
+
   })
 };
 </script>

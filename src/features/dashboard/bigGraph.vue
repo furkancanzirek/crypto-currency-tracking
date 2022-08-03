@@ -70,7 +70,7 @@ watch(
   () => {
 
     selectedCoin.value = selectedCoinStore.selectedCoin;
-    console.log(selectedCoin.value);
+    
   }
 );
 </script>
