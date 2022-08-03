@@ -102,9 +102,6 @@ onMounted(() => {
         dateCounter--
     }
   });
-  console.log(series);
-  console.log(props.series);
-
-
+  
 });
 </script>

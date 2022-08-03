@@ -160,14 +160,14 @@ const router = useRouter();
 const stateOfMenu = inject("stateOfMenu");
 const menuItems = ref(menuItemList);
 const changeMenuValue = (menuItemId) => {
-  console.log(menuItemId);
+
   menuItems.value.forEach((menuItem) => {
     if (menuItemId == menuItem.id) {
       menuItem.active = true;
     } else {
       menuItem.active = false;
     }
-    console.log(menuItem.active);
+
   });
 };
 let auth;
@@ -175,7 +175,7 @@ onMounted(() => {
   auth = getAuth();
 });
 const logOut = () => {
-  console.log("çıkış");
+
   signOut(auth).then(() => {
     router.push("/");
     localStorage.removeItem("userData");
@@ -183,7 +183,7 @@ const logOut = () => {
   });
 };
 const handleMenu = () => {
-  console.log("asdfasdf");
+
   stateOfMenu.value = !stateOfMenu.value;
 };
 </script>

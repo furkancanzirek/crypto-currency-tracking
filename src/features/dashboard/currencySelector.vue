@@ -116,7 +116,7 @@ const EURCoinStore = useEURCoinStore();
 const selectedCoinStore = useSelectedCoinStore();
 const handleSelectedCoin = (coin) => {
   selectedCoinStore.setSelectedCoin(coin);
-  console.log("merhaba");
+
 };
 const darkMode = inject("darkMode");
 const categories = ref({

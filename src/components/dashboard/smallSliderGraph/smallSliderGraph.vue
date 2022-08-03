@@ -1,5 +1,5 @@
 <template>
-  <div
+  <div 
     class="
       currencySmallGraph
       bg-white
@@ -10,6 +10,7 @@
       justify-between
       p-8
     "
+
   >
     <div class="currencyType">
       <div class="flex">
@@ -53,7 +54,7 @@ const props = defineProps({
 watch(
   () => props.coin,
   () => {
-    console.log(props.coin);
+
   }
 );
 </script>

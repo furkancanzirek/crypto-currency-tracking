@@ -85,7 +85,9 @@
             </div>
           </div>
 
-          <div class="mx-auto max-w-xs">
+         
+
+          <form class="mx-auto max-w-xs">
             <input
               class="
                 w-full
@@ -141,12 +143,13 @@
                 focus:shadow-outline focus:outline-none
               "
               @click="login"
+              type="submit"
             >
               <i class="ri-user-add-line text-lg"></i>
 
               <span class="ml-3"> Login </span>
             </button>
-            <button
+            <!-- <button
               class="
                 mt-5
                 tracking-wide
@@ -179,7 +182,7 @@
               >
                 Sign up</span
               >
-            </button>
+            </button> -->
             <p class="mt-6 text-xs text-gray-600 text-center">
               I agree to abide by QuickCrypto's
               <a href="#" class="border-b border-gray-500 border-dotted">
@@ -190,7 +193,7 @@
                 Privacy Policy
               </a>
             </p>
-          </div>
+          </form>
         </div>
       </div>
     </div>
@@ -225,27 +228,28 @@ const email = ref("");
 const password = ref("");
 const router = useRouter();
 
-const login = () => {
-  console.log("giriş deneniyor");
+const login = (e) => {
+  e.preventDefault();
+ 
   signInWithEmailAndPassword(getAuth(), email.value, password.value)
     .then((data) => {
-      console.log("successfully sign In");
+     
       Toast.fire({
         icon: "success",
         title: "Signed in successfully",
       });
       const auth = getAuth();
-      console.log(auth.currentUser);
+    
       localStorage.setItem("authKey", auth.currentUser.accessToken);
       localStorage.setItem(
         "userData",
         JSON.stringify(auth.currentUser.providerData[0])
       );
       router.push("dashboard");
-      console.log("sadfsdf");
+     
     })
     .catch((error) => {
-      console.log(error);
+     
     });
 };
 const signInWithGoogle = () => {};

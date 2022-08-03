@@ -219,17 +219,17 @@ const errMsg=ref()
 const register = () => {
   createUserWithEmailAndPassword(getAuth(), email.value, password.value)
     .then((data) => {
-      console.log("successfully registered");
+
       Toast.fire({
         icon: "success",
         title: "Successfully registered",
       });
       const auth = getAuth();
-      console.log(auth.currentUser);
+    
       router.push("/");
     })
     .catch((error) => {
-      console.log(error);
+     
       Toast.fire({
         icon:"error",
         title:errMsg.value

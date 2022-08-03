@@ -7,18 +7,18 @@ const router = createRouter({
 });
 
 router.beforeEach((to, from, next) => {
-    console.log(JSON.parse(localStorage.getItem('userData')));
+  
   if (to.matched.some((record) => record.meta.requiresAuth)) {
     if (getAuth.currentUser||localStorage.getItem('authKey')) {
-      console.log("geçti");
+
       next();
     } else {
-      console.log("iki");
+  
      
       next("/");
     }
   } else {
-    console.log("asdfasdfasdf");
+    
     next();
   }
 });

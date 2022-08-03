@@ -16,7 +16,7 @@ export const useSelectedCoinStore=defineStore("SelectedCoinStore",{
     actions:{
         setSelectedCoin(selectedCoin){
             this.selectedCoin=selectedCoin;
-            console.log(this.selectedCoin);
+          
         }
     }
 })

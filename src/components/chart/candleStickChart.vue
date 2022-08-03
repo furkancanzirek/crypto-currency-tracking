@@ -35,7 +35,7 @@ watch(
           ],
         });
       } else {
-        console.log("asdfasdf");
+
         filteredList.value.push({
           x: new Date(new Date().getTime() - (24 * 60 * 60 * 1000 * idx) / 24),
           y: [
@@ -52,7 +52,7 @@ watch(
         data: filteredList.value.reverse(),
       },
     ];
-    console.log(filteredList.value.reverse());
+
   }
 );
 const props = defineProps({

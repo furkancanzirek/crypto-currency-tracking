@@ -322,7 +322,7 @@ const handleNotifications = () => {
   stateOfNotifications.value = !stateOfNotifications.value;
 };
 const handleSearchBar = () => {
-  console.log(handleSearchBar.value);
+
   stateOfSearchBar.value = !stateOfSearchBar.value;
 };
 const selectedCoin = ref("");
@@ -337,9 +337,9 @@ const filteredCoin = computed(() =>
       })
 );
 const handleSelectedCoin = (coin) => {
-  console.log(coin);
+
   selectedCoinStore.setSelectedCoin(coin);
-  console.log("merhaba");
+ 
 };
 const changeBigGraph = () => {};
 const allCryptoDatasUSD = ref([]);
@@ -358,7 +358,7 @@ provide("allCryptoDatasUSD", allCryptoDatasUSD);
 provide("allCryptoDatasEUR", allCryptoDatasEUR);
 provide("darkMode", darkMode);
 onMounted(() => {
-  console.log(darkMode.value);
+
   getCryptoDatas();
 });
 </script>
