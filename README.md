@@ -16,6 +16,8 @@
     ·
     <a href="https://github.com/furkancanzirek/crypto-currency-tracking/issues">Request Feature</a>
   </p>
+  DEMO MAIL: demo@gmail.com <br />
+  DEMO PASSWORD: 123456
 </div>
 
 
