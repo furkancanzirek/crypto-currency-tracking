@@ -42,6 +42,7 @@
                 hover:shadow
                 focus:shadow-sm focus:shadow-outline
               "
+              @click="signInWithGoogle"
             >
               <div class="bg-white p-2 rounded-full">
                 <svg class="w-4" viewBox="0 0 533.5 544.3">
@@ -196,7 +197,7 @@
 </template>
 
 <script setup>
-import { getAuth, createUserWithEmailAndPassword } from "firebase/auth";
+import { getAuth, createUserWithEmailAndPassword,GoogleAuthProvider,signInWithPopup} from "firebase/auth";
 import { ref } from "vue";
 import { useRouter, useRoute } from "vue-router";
 import Swal from "sweetalert2";
@@ -236,5 +237,23 @@ const register = () => {
       })
     });
 };
-const signInWithGoogle = () => {};
+const signInWithGoogle = () => {
+  const provider =new GoogleAuthProvider(getAuth());
+  signInWithPopup(getAuth(), provider)
+  .then((result)=>{
+    Toast.fire({
+        icon: "success",
+        title: "Signed in successfully",
+      });
+    console.log(result.user);
+    localStorage.setItem("authKey", result.user.accessToken);
+      localStorage.setItem(
+        "userData",
+        JSON.stringify(result.user.providerData[0])
+      );
+      router.push("dashboard");
+  }).catch((error) => {
+    console.log(error);
+  })
+};
 </script>

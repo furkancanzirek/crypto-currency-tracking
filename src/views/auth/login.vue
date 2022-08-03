@@ -42,6 +42,7 @@
                 hover:shadow
                 focus:shadow-sm focus:shadow-outline
               "
+              @click="signInWithGoogle"
             >
               <div class="bg-white p-2 rounded-full">
                 <svg class="w-4" viewBox="0 0 533.5 544.3">
@@ -84,8 +85,6 @@
               Or login with e-mail
             </div>
           </div>
-
-         
 
           <form class="mx-auto max-w-xs">
             <input
@@ -149,7 +148,7 @@
 
               <span class="ml-3"> Login </span>
             </button>
-            <!-- <button
+            <button
               class="
                 mt-5
                 tracking-wide
@@ -182,7 +181,7 @@
               >
                 Sign up</span
               >
-            </button> -->
+            </button>
             <p class="mt-6 text-xs text-gray-600 text-center">
               I agree to abide by QuickCrypto's
               <a href="#" class="border-b border-gray-500 border-dotted">
@@ -208,7 +207,7 @@
   </div>
 </template>
 <script setup>
-import { getAuth, signInWithEmailAndPassword } from "firebase/auth";
+import { getAuth, signInWithEmailAndPassword,GoogleAuthProvider,signInWithPopup } from "firebase/auth";
 import { ref } from "vue";
 import { useRouter, useRoute } from "vue-router";
 import Swal from "sweetalert2";
@@ -227,30 +226,64 @@ const Toast = Swal.mixin({
 const email = ref("");
 const password = ref("");
 const router = useRouter();
-
+const errMsg = ref("");
 const login = (e) => {
   e.preventDefault();
- 
+
   signInWithEmailAndPassword(getAuth(), email.value, password.value)
     .then((data) => {
-     
       Toast.fire({
         icon: "success",
         title: "Signed in successfully",
       });
       const auth = getAuth();
-    
+
       localStorage.setItem("authKey", auth.currentUser.accessToken);
       localStorage.setItem(
         "userData",
         JSON.stringify(auth.currentUser.providerData[0])
       );
       router.push("dashboard");
-     
     })
     .catch((error) => {
-     
+      console.log(error.code);
+      switch (error.code) {
+        case "auth/invalid-email":
+          errMsg.value = "Invalid Email";
+          break;
+        case "auth/user-not-found":
+          errMsg.value = "No Account with that email was found";
+          break;
+          case "auth/wrong-password":
+          errMsg.value = "Invalid Password";
+          break;
+          default:
+          errMsg.value = "Email or password was incorrect";
+          break;
+      }
+      Toast.fire({
+        icon: "error",
+        title: errMsg.value,
+      });
     });
 };
-const signInWithGoogle = () => {};
+const signInWithGoogle = () => {
+  const provider =new GoogleAuthProvider(getAuth());
+  signInWithPopup(getAuth(), provider)
+  .then((result)=>{
+    console.log(result.user);
+    Toast.fire({
+        icon: "success",
+        title: "Signed in successfully",
+      });
+    localStorage.setItem("authKey", result.user.accessToken);
+      localStorage.setItem(
+        "userData",
+        JSON.stringify(result.user.providerData[0])
+      );
+      router.push("dashboard");
+  }).catch((error) => {
+    console.log(error);
+  })
+};
 </script>

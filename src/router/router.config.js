@@ -7,18 +7,19 @@ const router = createRouter({
 });
 
 router.beforeEach((to, from, next) => {
-  
   if (to.matched.some((record) => record.meta.requiresAuth)) {
-    if (getAuth.currentUser||localStorage.getItem('authKey')) {
-
+    if (getAuth.currentUser || localStorage.getItem("authKey")) {
       next();
     } else {
-  
-     
       next("/");
     }
   } else {
-    
+    if (getAuth.currentUser || localStorage.getItem("authKey")) {
+      if (to.path=="/") {
+        next("/dashboard");
+      }
+    }
+
     next();
   }
 });

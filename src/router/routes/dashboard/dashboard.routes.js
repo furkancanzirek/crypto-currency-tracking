@@ -1,5 +1,4 @@
 import dashboard from "@/views/dashboard/dashboard.vue";
-
 export default [
   {
     name: "dashboard",
@@ -10,13 +9,13 @@ export default [
     meta: {
       requiresAuth: true,
     },
-
     children: [
       {
         path: "",
         component: dashboard,
 
       },
+
     ],
   },
 ];
