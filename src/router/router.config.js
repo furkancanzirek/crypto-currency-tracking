@@ -25,8 +25,11 @@ router.beforeEach((to, from, next) => {
         next("/dashboard");
       }
     }
-    console.log("burada 7");
-    next();
+    else{
+      next();
+    }
+   
+   
   }
 });
 export default router;
