@@ -2,6 +2,7 @@
   <div
     class="
       max-w-screen-xl
+      min-h-[800px]
       m-0
       sm:m-20
       bg-white
